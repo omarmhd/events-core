@@ -16,17 +16,17 @@
 
     <style>
         :root {
-            --primary-color: #46AA32;
-            --secondary-color: #2E8B57;
-            --accent-color: #8FD970;
+            --primary-color: #DABC9A;
+            --secondary-color: #DABC9A;
+            --accent-color: #DABC9A;
             --text-dark: #1F2937;
             --text-gray: #6B7280;
             --bg-light: #F3F4F6;
             --white: #ffffff;
-            --gradient-primary: linear-gradient(135deg, #46AA32 0%, #2E8B57 100%);
+            --gradient-primary: linear-gradient(135deg, #DABC9A 0%, #DABC9A 100%);
             --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-glow: 0 0 20px rgba(70, 170, 50, 0.4);
+            --shadow-glow: 0 0 20px rgba(252, 235, 195, 0.4);
         }
 
         body {
@@ -172,7 +172,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #2E8B57 0%, #46AA32 100%);
+            background: linear-gradient(135deg, #DABC9A 0%, #DABC9A%);
             z-index: -1;
             transition: opacity 0.3s ease;
             opacity: 0;
