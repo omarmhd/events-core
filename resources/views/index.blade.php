@@ -172,7 +172,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #DABC9A 0%, #DABC9A%);
+            background: linear-gradient(135deg, #DABC9A 0%, #dabc9a%);
             z-index: -1;
             transition: opacity 0.3s ease;
             opacity: 0;
@@ -180,7 +180,7 @@
 
         .btn-register-main:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(70, 170, 50, 0.5);
+            box-shadow: 0 10px 25px rgba(218, 188, 154, 0.44);
             color: white;
         }
 
