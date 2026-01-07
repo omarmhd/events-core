@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>{{$event->title}} - Registration</title>
+    <title>{{$event->title_en}} - Registration</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -411,7 +411,7 @@
                 </div>
 
                 <div class="hero-content animate__animated animate__fadeInUp animate__delay-1s">
-                    <h1 class="event-title">{{$event->title}}</h1>
+                    <h1 class="event-title">{{$event->title_en}}</h1>
 
                     <div class="info-grid">
                         <div class="info-card">
