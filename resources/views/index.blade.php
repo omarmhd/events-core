@@ -22,13 +22,29 @@
         .floating-card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 40px; border: 1px solid rgba(218, 188, 154, 0.2); }
         .event-meta { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #eee; }
         .meta-item { display: flex; align-items: center; gap: 10px; background: #fffaf5; padding: 12px 25px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; border: 1px solid var(--beige-medium); }
-        .status-options { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px; }
-        .status-tile { background: white; border: 2px solid #e5e7eb; border-radius: 16px; padding: 25px 15px; cursor: pointer; transition: all 0.3s ease; text-align: center; }
+
+        /* --- التعديل هنا: جعل الشبكة 3 أعمدة --- */
+        .status-options { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 25px; }
+
+        /* في الموبايل نجعلها عمود واحد لكي لا تصغر الأزرار جداً */
+        @media (max-width: 576px) {
+            .status-options { grid-template-columns: 1fr; }
+        }
+
+        .status-tile { background: white; border: 2px solid #e5e7eb; border-radius: 16px; padding: 25px 10px; cursor: pointer; transition: all 0.3s ease; text-align: center; }
         .status-tile:hover { border-color: var(--primary-color); transform: translateY(-4px); }
+
+        /* تنسيق الحالات */
         .status-tile.active-accept { border-color: #198754; background-color: #f2fcf6; }
-        .status-tile.active-accept i { color: #198754; }
+        .status-tile.active-accept i { color: #198754 !important; }
+
+        /* تنسيق Maybe الجديد */
+        .status-tile.active-maybe { border-color: #ffc107; background-color: #fffbf0; }
+        .status-tile.active-maybe i { color: #ffc107 !important; }
+
         .status-tile.active-decline { border-color: #dc3545; background-color: #fef5f5; }
-        .status-tile.active-decline i { color: #dc3545; }
+        .status-tile.active-decline i { color: #dc3545 !important; }
+
         .action-section { display: none; background: #fcfbf9; padding: 30px; border-radius: 16px; margin-top: 30px; border: 1px solid #eee; animation: slideDown 0.4s ease; }
         .btn-main { background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); color: white; font-weight: 700; padding: 16px; width: 100%; border-radius: 12px; border: none; margin-top: 25px; font-size: 1.1rem; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
@@ -40,6 +56,7 @@
 @php
     $hasResponded = $guest->status !== 'pending';
     $isAccepted = $guest->status === 'accepted';
+    $isMaybe = $guest->status === 'maybe'; // التحقق من حالة Maybe
 @endphp
 
 <div class="top-banner">
@@ -59,18 +76,23 @@
                 <div class="text-center py-5">
                     <div class="mb-4">
                         <i id="successIcon"
-                           class="{{ $isAccepted ? 'fas fa-envelope-circle-check text-success' : 'far fa-check-circle text-muted' }}"
+                           class="@if($isAccepted) fas fa-envelope-circle-check text-success
+                                  @elseif($isMaybe) fas fa-question-circle text-warning
+                                  @else far fa-check-circle text-muted @endif"
                            style="font-size: 5rem;"></i>
                     </div>
 
-                    <h2 class="fw-bold mb-3" id="successTitle" style="{{ $isAccepted ? 'color: #198754;' : 'color: #6c757d;' }}">
-                        {{ $isAccepted ? 'Attendance Confirmed!' : 'Response Recorded' }}
+                    <h2 class="fw-bold mb-3" id="successTitle"
+                        style="@if($isAccepted) color: #198754; @elseif($isMaybe) color: #ffc107; @else color: #6c757d; @endif">
+                        {{ $isAccepted ? 'Attendance Confirmed!' : ($isMaybe ? 'Response Recorded' : 'Response Recorded') }}
                     </h2>
 
                     <p class="lead mb-4" id="successMessage">
                         @if($hasResponded)
                             @if($isAccepted)
                                 You have already confirmed your attendance.<br>Please check your email for the QR Code.
+                            @elseif($isMaybe)
+                                You marked as 'Maybe'. Please update us when you are sure.
                             @else
                                 You have previously declined this invitation.
                             @endif
@@ -108,6 +130,11 @@
                             <h5>Yes, I'll Attend</h5>
                         </div>
 
+                        <div class="status-tile" id="btnMaybe" onclick="selectStatus('maybe')">
+                            <i class="fas fa-question-circle" style="font-size: 2.5rem; margin-bottom: 15px; display: block; color: #d1d5db;"></i>
+                            <h5>Maybe</h5>
+                        </div>
+
                         <div class="status-tile" id="btnDecline" onclick="selectStatus('declined')">
                             <i class="fas fa-times-circle" style="font-size: 2.5rem; margin-bottom: 15px; display: block; color: #d1d5db;"></i>
                             <h5>Sorry, I Can't</h5>
@@ -119,13 +146,19 @@
                         <select name="guests_count" class="form-select mb-4 p-3 rounded-3">
                             <option value="0">Just me</option>
                             @for($i=1;$i<=$guest->allowed_guests;$i++)
-
-                            <option value="{{$i}}">{{$i}} Guest</option>
+                                <option value="{{$i}}">{{$i}} Guest</option>
                             @endfor
-
                         </select>
                         <button type="submit" class="btn-main" id="submitBtn">
                             <span class="btn-text">Confirm Attendance</span>
+                            <span class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
+                        </button>
+                    </div>
+
+                    <div id="maybeSection" class="action-section" style="background: #fffbf0; border-color: #ffeeba;">
+                        <p class="text-warning-emphasis fw-bold text-center mb-3">Not sure yet</p>
+                        <button type="submit" class="btn btn-warning w-100 py-3 fw-bold rounded-3 text-white" id="maybeSubmitBtn">
+                            <span class="btn-text">Send  Response</span>
                             <span class="spinner-border spinner-border-sm ms-2 d-none" role="status"></span>
                         </button>
                     </div>
@@ -159,28 +192,48 @@
 <script>
     // المتغيرات
     const btnAccept = document.getElementById('btnAccept');
+    const btnMaybe = document.getElementById('btnMaybe'); // جديد
     const btnDecline = document.getElementById('btnDecline');
+
     const guestSection = document.getElementById('guestSection');
+    const maybeSection = document.getElementById('maybeSection'); // جديد
     const declineSection = document.getElementById('declineSection');
+
     const statusInput = document.getElementById('response_status');
 
     function selectStatus(status) {
         statusInput.value = status;
+
+        // إزالة التنشيط من الكل
         btnAccept.classList.remove('active-accept');
+        btnMaybe.classList.remove('active-maybe');
         btnDecline.classList.remove('active-decline');
+
         btnAccept.querySelector('i').style.color = '#d1d5db';
+        btnMaybe.querySelector('i').style.color = '#d1d5db';
         btnDecline.querySelector('i').style.color = '#d1d5db';
 
+        // إخفاء الأقسام
+        guestSection.style.display = 'none';
+        maybeSection.style.display = 'none';
+        declineSection.style.display = 'none';
+
+        // تفعيل الزر المختار وإظهار قسمه
         if (status === 'accepted') {
             btnAccept.classList.add('active-accept');
-            btnAccept.querySelector('i').style.color = '#198754';
+            btnAccept.querySelector('i').style.color = '#198754'; // أخضر
             guestSection.style.display = 'block';
-            declineSection.style.display = 'none';
             guestSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        } else if (status === 'maybe') {
+            btnMaybe.classList.add('active-maybe');
+            btnMaybe.querySelector('i').style.color = '#ffc107'; // أصفر
+            maybeSection.style.display = 'block';
+            maybeSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
         } else {
             btnDecline.classList.add('active-decline');
-            btnDecline.querySelector('i').style.color = '#dc3545';
-            guestSection.style.display = 'none';
+            btnDecline.querySelector('i').style.color = '#dc3545'; // أحمر
             declineSection.style.display = 'block';
             declineSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
@@ -195,7 +248,12 @@
             const formData = new FormData(this);
             const status = formData.get('response_status');
 
-            const activeBtn = status === 'accepted' ? document.getElementById('submitBtn') : document.getElementById('declineBtn');
+            // تحديد الزر النشط لتشغيل الـ Spinner عليه
+            let activeBtn;
+            if(status === 'accepted') activeBtn = document.getElementById('submitBtn');
+            else if(status === 'maybe') activeBtn = document.getElementById('maybeSubmitBtn');
+            else activeBtn = document.getElementById('declineBtn');
+
             const btnText = activeBtn.querySelector('.btn-text');
             const spinner = activeBtn.querySelector('.spinner-border');
 
@@ -229,10 +287,15 @@
                             successTitle.innerText = "Attendance Confirmed!";
                             successMsg.innerText = "Check your email. Your entry tickets have been sent. Please scan them upon arrival.";
                             successIcon.className = "fas fa-envelope-circle-check text-success";
+                        } else if(status === 'maybe') {
+                            successTitle.style.color = '#ffc107'; // أصفر
+                            successTitle.innerText = "Tentative Response Recorded";
+                            successMsg.innerText = "We've noted you as 'Maybe'. Please let us know when you decide.";
+                            successIcon.className = "fas fa-question-circle text-warning";
                         } else {
                             successTitle.style.color = '#6c757d';
                             successTitle.innerText = "Response Recorded";
-                            successMsg.innerText = "Your response has been received. Thank you..";
+                            successMsg.innerText = "Your response has been received. Thank you.";
                             successIcon.className = "far fa-check-circle text-muted";
                         }
 

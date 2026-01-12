@@ -40,6 +40,7 @@ class EventInvitationController extends Controller
         SUM(status = 'pending') as pending,
         SUM(status = 'accepted') as accepted,
         SUM(status = 'declined') as declined
+        SUM(status = 'maybe') as maybe
     ") ->first();;
         $rows = $query->latest()->paginate(6);
 
@@ -50,6 +51,8 @@ class EventInvitationController extends Controller
             'pending'  => $stats->pending,
             'accepted' => $stats->accepted,
             'declined' => $stats->declined,
+            'maybe' => $stats->maybe,
+
         ];
 
         return view('admin.invitations.index', compact('rows','stats'));
@@ -85,9 +88,6 @@ class EventInvitationController extends Controller
             $invitation->invitation_token
         );
         $event=Event::where("name","!=",null)->first();
-
-
-
 
         if ($invitation->invitee_email) {
             Mail::to($invitation->invitee_email)
@@ -150,7 +150,7 @@ class EventInvitationController extends Controller
                 ], 422);
             }
             $request->validate([
-                'response_status' => 'required|in:accepted,declined',
+                'response_status' => 'required|in:accepted,declined,maybe',
                 'guests_count' => 'nullable|integer|min:0|max:'.$guest->allowed_guests,
             ]);
 
