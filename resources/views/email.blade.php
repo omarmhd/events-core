@@ -145,13 +145,7 @@
 
                 <div class="qr-container">
                     <p style="margin-bottom: 10px; font-size: 14px; color: #666;">Scan at gate / امسح الكود عند الدخول</p>
-                    @if($ticket->barcode && \Illuminate\Support\Facades\Storage::disk('public')->exists("qr_codess/".$ticket->barcode))
-                        <img width="180" height="180"
-                             src="{{ $message->embed(\Illuminate\Support\Facades\Storage::disk('public')->path("qr_codess/".$ticket->barcode)) }}"
-                             alt="QR Code">
-                    @else
-                        <p style="color: red;">QR Code not available</p>
-                    @endif
+                    <img width="180" height="180" src="cid:ticket{{ $loop->index }}" alt="QR Code">
                 </div>
             </div>
         @endforeach

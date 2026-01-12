@@ -206,7 +206,7 @@
             method: "GET",
             data: { qrData: qrData },
             success: function (response) {
-                if (response.success) {
+                if (response.success=="true") {
                     Swal.fire({
                         title: 'Success!',
                         text: 'Attendance recorded successfully.',

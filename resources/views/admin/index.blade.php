@@ -1,6 +1,6 @@
-@extends('layout')
+@extends('layouts.abstract')
 
-@section('title', 'Smart Dashboard')
+@section('title', 'SAMI Event Dashboard')
 
 @section('content')
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,19 +11,19 @@
     <style>
         :root {
             --primary-bg: #F8FAFC;
-            --card-bg: #FFFFFF;
+            --card-bg: rgba(255, 255, 255, 0.8);
             --text-main: #0F172A;
             --text-muted: #64748B;
 
-            /* Modern Gradients */
+            /* Gradients */
             --grad-purple: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
             --grad-blue: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
             --grad-green: linear-gradient(135deg, #10b981 0%, #34d399 100%);
             --grad-orange: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
             --grad-dark: linear-gradient(135deg, #1e293b 0%, #334155 100%);
 
-            --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
         }
 
         body {
@@ -33,89 +33,42 @@
             overflow-x: hidden;
         }
 
-        /* Ambient Background Background */
+        /* Ambient Background */
         .ambient-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-            background: var(--primary-bg);
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
+            background: var(--primary-bg); overflow: hidden;
         }
-
         .ambient-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
+            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4;
             animation: floatOrb 10s infinite ease-in-out alternate;
         }
+        .orb-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #6366f1; }
+        .orb-2 { bottom: -10%; right: -10%; width: 600px; height: 600px; background: #3b82f6; animation-delay: -5s; }
+        @keyframes floatOrb { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 50px); } }
 
-        .orb-1 {
-            top: -10%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: #6366f1;
+        /* --- LOGO SECTION --- */
+        .brand-section {
+            display: inline-flex; align-items: center; gap: 12px; margin-bottom: 1.5rem;
+            padding: 10px 25px; background: white; border-radius: 50px; box-shadow: var(--shadow-card);
         }
-
-        .orb-2 {
-            bottom: -10%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: #3b82f6;
-            animation-delay: -5s;
+        .brand-icon {
+            width: 40px; height: 40px; background: var(--grad-purple); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;
         }
+        .brand-text { font-size: 1.5rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+        .brand-text span { color: #6366f1; }
 
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(30px, 50px); }
-        }
+        .dashboard-header { padding: 2rem 0 3rem 0; }
+        .welcome-text { font-size: 1.1rem; color: var(--text-muted); font-weight: 500; }
 
-        /* Hero Section */
-        .dashboard-header {
-            padding: 3rem 0;
-            position: relative;
-        }
-
-        .welcome-badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            background: white;
-            border-radius: 50px;
-            box-shadow: var(--shadow-card);
-            margin-bottom: 1rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        .welcome-badge i {
-            color: #f59e0b;
-            margin-right: 0.5rem;
-        }
-
-        .dashboard-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            background: linear-gradient(to right, #1e293b, #64748b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Dashboard Cards */
+        /* --- Main Cards --- */
         .dashboard-card {
             background: var(--card-bg);
+            backdrop-filter: blur(12px);
             border-radius: 24px;
-            padding: 2rem;
+            padding: 2.5rem 1.5rem; /* مساحة أكبر للأيقونة */
             height: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: var(--shadow-card);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -130,144 +83,67 @@
         .dashboard-card:hover {
             transform: translateY(-8px);
             box-shadow: var(--shadow-hover);
-            border-color: rgba(99, 102, 241, 0.2);
+            border-color: rgba(99, 102, 241, 0.3);
         }
-
+        .disabled-card {
+            pointer-events: none;
+            opacity: 0.5;
+            filter: grayscale(100%);
+            cursor: not-allowed;
+        }
+        /* Icon Container (Big Center) */
         .icon-container {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            color: white;
-            font-size: 2rem;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 80px; height: 80px; border-radius: 24px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem; color: white; font-size: 2rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
             transition: transform 0.4s ease;
-            position: relative;
-            z-index: 2;
         }
+        .dashboard-card:hover .icon-container { transform: scale(1.1) rotate(5deg); }
 
-        .dashboard-card:hover .icon-container {
-            transform: scale(1.1) rotate(5deg);
-        }
+        .card-label { font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; }
+        .card-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
 
-        .card-label {
-            font-size: 1.25rem;
+        /* --- Small Stat Badge --- */
+        .stat-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #f1f5f9;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
             font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .card-desc {
-            font-size: 0.9rem;
             color: var(--text-muted);
-            line-height: 1.5;
-            position: relative;
-            z-index: 2;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex; align-items: center; gap: 5px;
+            transition: 0.3s;
         }
+        .dashboard-card:hover .stat-badge { background: white; color: var(--text-main); transform: scale(1.05); }
 
-        /* Feature Card (Wide) */
+        /* Feature Card */
         .feature-card {
-            background: white;
-            border-radius: 24px;
-            padding: 2.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            background: white; border-radius: 24px; padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.8);
             box-shadow: var(--shadow-card);
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #f1f5f9;
         }
+        .feature-card:hover { transform: scale(1.01); box-shadow: var(--shadow-hover); }
 
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 6px;
-            height: 100%;
-            background: var(--grad-dark);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: scale(1.01);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .feature-card:hover::before {
-            width: 10px;
-        }
-
-        .feature-content h4 {
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-main);
-        }
-
-        .feature-action {
-            width: 50px;
-            height: 50px;
-            background: #f1f5f9;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover .feature-action {
-            background: var(--text-main);
-            color: white;
-            transform: translateX(5px);
-        }
-
-        /* Logout Button */
-        .btn-logout {
-            background: white;
-            border: 2px solid #e2e8f0;
-            padding: 0.8rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            color: var(--text-muted);
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-logout:hover {
-            background: #fee2e2;
-            border-color: #fecaca;
-            color: #ef4444;
-            transform: translateY(-2px);
-        }
-
-        /* Gradients */
+        /* Gradients Helper */
         .bg-grad-purple { background: var(--grad-purple); }
         .bg-grad-blue { background: var(--grad-blue); }
         .bg-grad-green { background: var(--grad-green); }
         .bg-grad-orange { background: var(--grad-orange); }
         .bg-grad-dark { background: var(--grad-dark); }
 
-        /* Animation Delays */
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
-
-        @media (max-width: 768px) {
-            .dashboard-title { font-size: 2rem; }
-            .feature-card { flex-direction: column; text-align: center; gap: 1.5rem; }
-            .feature-card::before { width: 100%; height: 6px; top: 0; left: 0; }
+        .btn-logout {
+            padding: 0.6rem 2rem; border-radius: 50px; font-weight: 600; font-size: 0.9rem;
+            color: #ef4444; background: white; border: 1px solid #fee2e2;
+            transition: 0.3s; display: inline-flex; align-items: center; gap: 8px;
         }
+        .btn-logout:hover { background: #fee2e2; color: #dc2626; }
     </style>
 
     <div class="ambient-bg">
@@ -276,27 +152,37 @@
     </div>
 
     <div class="container pb-5">
+
         <header class="dashboard-header text-center animate__animated animate__fadeInDown">
-            <div class="welcome-badge">
-                <i class="fas fa-sun"></i> Hi Admin
+            <div class="brand-section">
+                <div class="brand-text">SAMI<span>Event</span></div>
             </div>
-            <h1 class="dashboard-title">Overview Dashboard</h1>
-            <p class="text-muted">Manage your event ecosystem efficiently.</p>
+            <h2 class="fw-bold mb-2">Welcome Back, Admin</h2>
+            <p class="welcome-text">Select a module to manage your event.</p>
         </header>
 
         <div class="row g-4 mb-5">
+
             <div class="col-12 col-md-6 col-lg-3 animate__animated animate__fadeInUp delay-1">
-                <a href="{{ route('register_attendance') }}" class="dashboard-card">
+                <a href="{{ route('invitations.index') }}" class="dashboard-card">
+{{--                    <div class="stat-badge" title="Manual Check-ins">--}}
+{{--                        <i class="fas fa-pen-fancy text-xs opacity-50"></i> {{ $manual_checkins ?? 'N/A' }}--}}
+{{--                    </div>--}}
+
                     <div class="icon-container bg-grad-purple">
-                        <i class="fas fa-user-pen"></i>
+                        <i class="fas fa-envelope-open-text"></i>
                     </div>
-                    <h3 class="card-label">Check-in</h3>
-                    <p class="card-desc">Manual registration for attendees</p>
+                    <h3 class="card-label">Invitation Management</h3>
+                    <p class="card-desc">Send and resend invitations, view invitees, and track the status</p>
                 </a>
             </div>
 
             <div class="col-12 col-md-6 col-lg-3 animate__animated animate__fadeInUp delay-2">
                 <a href="{{ route('qr') }}" class="dashboard-card">
+{{--                    <div class="stat-badge" title="Total Scans Today">--}}
+{{--                        <i class="fas fa-qrcode text-xs opacity-50"></i> {{ $scans_today ?? '1.2k' }}--}}
+{{--                    </div>--}}
+
                     <div class="icon-container bg-grad-blue">
                         <i class="fas fa-qrcode"></i>
                     </div>
@@ -305,18 +191,27 @@
                 </a>
             </div>
 
-            <div class="col-12 col-md-6 col-lg-3 animate__animated animate__fadeInUp delay-3">
+            <div class="col-12 col-md-6 col-lg-3 animate__animated animate__fadeInUp delay-3 disabled-card">
                 <a href="{{ route('attendance_list') }}" class="dashboard-card">
+{{--                    <div class="stat-badge text-success" title="Checked In">--}}
+{{--                        <span class="spinner-grow spinner-grow-sm me-1" style="width: 8px; height: 8px;" role="status"></span>--}}
+{{--                        {{ $checked_in_count ?? '842' }}--}}
+{{--                    </div>--}}
+
                     <div class="icon-container bg-grad-green">
                         <i class="fas fa-table-list"></i>
                     </div>
-                    <h3 class="card-label">Live Records</h3>
-                    <p class="card-desc">Real-time attendance list</p>
+                    <h3 class="card-label">Checked-in Employees</h3>
+                    <p class="card-desc">Employees who attended the meeting</p>
                 </a>
             </div>
 
-            <div class="col-12 col-md-6 col-lg-3 animate__animated animate__fadeInUp delay-4">
+            <div class="col-12 col-md-6 col-lg-3 animate__animated animate__fadeInUp delay-4 disabled-card">
                 <a href="{{ route('statistics') }}" class="dashboard-card">
+{{--                    <div class="stat-badge" title="Completion Rate">--}}
+{{--                        <i class="fas fa-chart-line text-xs opacity-50"></i> 92%--}}
+{{--                    </div>--}}
+
                     <div class="icon-container bg-grad-orange">
                         <i class="fas fa-chart-pie"></i>
                     </div>
@@ -326,35 +221,34 @@
             </div>
         </div>
 
-        <div class="row mb-5 animate__animated animate__fadeInUp animate__delay-1s">
-            <div class="col-12">
-                <a href="/emps" class="text-decoration-none">
-                    <div class="feature-card">
-                        <div class="d-flex align-items-center gap-4 flex-column flex-md-row">
-                            <div class="icon-container bg-grad-dark mb-0" style="width: 60px; height: 60px; font-size: 1.5rem;">
-                                <i class="fas fa-users-gear"></i>
-                            </div>
-                            <div class="feature-content">
-                                <h4>Staff Management Hub</h4>
-                                <p class="mb-0 text-muted">All employees registered for the event and resend digital tickets.</p>
-                            </div>
-                        </div>
-                        <div class="feature-action">
-                            <i class="fas fa-arrow-right"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
+{{--        <div class="row mb-5 animate__animated animate__fadeInUp animate__delay-1s">--}}
+{{--            <div class="col-12">--}}
+{{--                <a href="{{ route('emps') }}" class="text-decoration-none text-dark">--}}
+{{--                    <div class="feature-card d-flex align-items-center justify-content-between flex-wrap gap-4">--}}
+{{--                        <div class="d-flex align-items-center gap-4">--}}
+{{--                            <div class="icon-container bg-grad-dark mb-0" style="width: 60px; height: 60px; font-size: 1.5rem;">--}}
+{{--                                <i class="fas fa-users-gear"></i>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <h4 class="fw-bold mb-1">Staff Management Hub</h4>--}}
+{{--                                <p class="mb-0 text-muted">Manage {{ $total_staff ?? 'all' }} employees and invitations.</p>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">--}}
+{{--                            <i class="fas fa-arrow-right"></i>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
         <div class="text-center animate__animated animate__fadeIn animate__delay-2s">
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
-                <button type="submit" class="btn-logout">
-                    <i class="fas fa-power-off"></i>  Logout
+                <button type="submit" class="btn-logout shadow-sm">
+                    <i class="fas fa-power-off"></i> Sign Out
                 </button>
             </form>
-            <p class="mt-3 text-muted" style="font-size: 0.8rem;"></p>
         </div>
     </div>
 @endsection

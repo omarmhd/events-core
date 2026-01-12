@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\TicketExport;
 use App\Models\Employee;
+use App\Models\InvitationQr;
 use App\Models\Ticket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -29,11 +30,7 @@ class AdminController extends Controller
 
             });
         }
-
-
         $emps = $query->latest()->paginate(10);
-
-
         $emps->appends($request->all());
 
         return view("admin.emps", compact("emps"));
@@ -41,19 +38,56 @@ class AdminController extends Controller
 
 
     public function checked_in(Request $request,$id=null){
-        if($request->qrData){
-            $ticket=Ticket::where("id",$request->qrData??$id)->update([
-                "checked_in_at"=>Carbon::now()
+        if (!$request->filled('qrData')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid QR data'
             ]);
-            return response()->json(["success"=>true,"message"=>"success"]);
         }
-        if($id){
-            $ticket=Ticket::where("id",$id)->update([
-                "checked_in_at"=>Carbon::now()
-            ]);
-            return back();
 
+        $invitationQr = InvitationQr::where('token',$request->qrData)->first();
+
+
+        if (!$invitationQr) {
+            return response()->json([
+                'success' => false,
+                'message' => 'QR code is not valid'
+            ]);
         }
+
+        // تم استخدامه مسبقًا
+        if ($invitationQr->is_used) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This guest has already checked in'
+            ]);
+        }
+
+        // تسجيل الحضور
+        $invitationQr->update([
+            'is_used' => true,
+            'used_at' => Carbon::now()
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Check-in successful'
+        ]);
+
+
+//        if($request->qrData){
+//            $ticket=Ticket::where("id",$request->qrData??$id)->update([
+//                "checked_in_at"=>Carbon::now()
+//            ]);
+//            return response()->json(["success"=>true,"message"=>"success"]);
+//        }
+//        if($id){
+//            $ticket=Ticket::where("id",$id)->update([
+//                "checked_in_at"=>Carbon::now()
+//            ]);
+//            return back();
+//
+//        }
 
     }
 

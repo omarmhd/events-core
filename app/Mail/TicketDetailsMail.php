@@ -12,11 +12,10 @@ class TicketDetailsMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    use Queueable, SerializesModels;
 
 
 
-    public $tickets; // ملاحظة: تم تغيير المتغير ليكون مجموعة من التذاكر
+    public $tickets;
     public $employee;
     public $event;
 
@@ -30,7 +29,7 @@ class TicketDetailsMail extends Mailable
     public function build()
     {
         $mail = $this->view('email')
-        ->subject('Ticket Details')   // الموضوع
+        ->subject('Ticket Details')
         ->with([
             'tickets' => $this->tickets,
             'employee' => $this->employee,

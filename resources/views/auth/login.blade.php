@@ -92,7 +92,7 @@
             </div>
 
             <div class="text-center mt-3 text-muted small">
-                &copy; {{ date('Y') }} Ticket Manager System
+
             </div>
         </div>
     </div>
