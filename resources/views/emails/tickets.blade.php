@@ -133,7 +133,7 @@
         <tr>
             <td align="center" style="padding: 20px 0;">
                 <p style="margin: 0; font-size: 12px; color: #A0AEC0;">
-                    Let's make it memorable.
+
                 </p>
                 <p style="margin: 5px 0 0 0; font-size: 11px; color: #CBD5E0;">
                     &copy; {{ date('Y') }} SAMI-AEC. All rights reserved.

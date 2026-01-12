@@ -63,7 +63,7 @@
 
                     <div style="background-color: #FAFAFA; border: 1px dashed #E2E8F0; border-radius: 8px; padding: 20px; margin-bottom: 25px;">
                         <p style="margin: 0 0 10px 0; font-size: 12px; color: #A0AEC0; text-transform: uppercase; letter-spacing: 1px;">Event Name</p>
-                        <h3 style="margin: 0; font-size: 18px; color: #2D3748;">{{ $event->name ?? 'Upcoming Event' }}</h3>
+                        <h3 style="margin: 0; font-size: 18px; color: #2D3748;">{{ $event->title_en ?? 'Upcoming Event' }}</h3>
                     </div>
 
                     <p style="margin: 0 0 20px 0; font-size: 14px; line-height: 1.6; color: #4A5568;">
