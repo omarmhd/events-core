@@ -173,6 +173,10 @@
             <span class="stat-value">{{ $stats["accepted"] ?? '0' }}</span>
         </div>
         <div class="stat-row">
+            <span class="stat-label">Maybe</span>
+            <span class="stat-value">{{ $stats["maybe"] ?? '0' }}</span>
+        </div>
+        <div class="stat-row">
             <span class="stat-label">Declined</span>
             <span class="stat-value">{{ $stats["declined"] ?? '0' }}</span>
         </div>
