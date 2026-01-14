@@ -74,22 +74,7 @@
 
                 <div style="width: 50px; height: 3px; background-color: #C5A065; margin: 0 auto 30px auto; border-radius: 2px;"></div>
 
-                <div style="margin-bottom: 15px;" dir="ltr">
-                    <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #718096; max-width: 90%; margin: 0 auto;">
-                        {{$event->description_en}}
-                    </p>
-                </div>
-                <div style="margin-bottom: 10px;" dir="rtl">
-                    <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #C5A065; font-weight: 500; max-width: 90%; margin: 0 auto;">
-                        {{$event->description}}
-                    </p>
-                </div>
 
-            </td>
-        </tr>
-
-        <tr>
-            <td align="center" style="padding-bottom: 30px;">
                 <h1 class="text-dark" style="margin: 0 0 10px 0; font-size: 22px; font-weight: 600;">Welcome, {{ $invitation->invitee_name }}</h1>
                 <p class="text-gray" style="margin: 0; font-size: 15px; line-height: 1.6; max-width: 90%;">
                     Thank you for accepting our invitation. Enclosed are your admission tickets.
