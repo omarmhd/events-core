@@ -196,4 +196,16 @@ class EventInvitationController extends Controller
             ]);
     }
 
+    public function destroy($id)
+    {
+        InvitationQr::where('event_invitation_id', $id)->delete();
+
+        EventInvitation::findOrFail($id)->delete();
+        return redirect()
+            ->back()
+            ->with('success', 'Invitation deleted successfully');
+
+    }
+
+
 }

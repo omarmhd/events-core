@@ -139,7 +139,17 @@
                                     <input type="hidden" name="id" value="{{ $row->id }}">
                                     <button class="btn btn-light btn-sm text-primary border shadow-sm"><i class="fas fa-sync-alt"></i></button>
                                 </form>
+                                <form action="{{ route('invitations.destroy', $row->id) }}" method="POST"
+                                      class="d-inline"
+                                      onsubmit="return confirm('Are you sure you want to delete this invitation?\nAll tickets related to this invitation will also be deleted.');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-light btn-sm text-danger border shadow-sm ms-1">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
                             </td>
+
                         </tr>
                     @empty
                         <tr><td colspan="6" class="text-center py-5">No records found.</td></tr>
