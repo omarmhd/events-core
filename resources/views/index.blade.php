@@ -95,7 +95,7 @@
                 width: 50px;
             }
             .event-title { font-size: 2rem; }
-            .event-title-ar { font-size: 1.4rem; padding: 5px 15px; }
+            .event-title-ar { font-size: 1.2rem; padding: 5px 15px; }
         }
 
         .main-card-container { margin-top: -100px; padding-bottom: 50px; }
