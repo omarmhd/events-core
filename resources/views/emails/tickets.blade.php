@@ -94,7 +94,7 @@
                                     <td align="center" style="padding: 35px 20px;">
 
                                         <span style="background-color: #FEF9EF; color: #C5A065; padding: 6px 16px; border-radius: 50px; font-size: 11px; font-weight: bold; letter-spacing: 1px; border: 1px solid #F0EAE0; text-transform: uppercase;">
-                                            Official Guest
+                                         <Main></Main>
                                         </span>
 
                                         <h2 style="margin: 15px 0 5px 0; color: #1a202c; font-size: 22px;">{{ $invitation->invitee_name }}</h2>
@@ -138,7 +138,7 @@
                                 <tr>
                                     <td align="center" style="padding: 25px 20px;">
 
-                                        <h3 style="margin: 0 0 15px 0; color: #718096; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">Companion Ticket / مرافق</h3>
+                                        <h3 style="margin: 0 0 15px 0; color: #718096; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">Guest Ticket {{ $loop->iteration }} / مرافق</h3>
 
                                         <div class="qr-frame" style="border-color: #E2E8F0;">
                                             <img src="{{ $message->embedData(base64_decode(explode(',', $ticket['qr'])[1]), $ticket['label'] . '.png') }}"
