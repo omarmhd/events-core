@@ -73,9 +73,6 @@
                 </div>
 
                 <div style="width: 50px; height: 3px; background-color: #C5A065; margin: 0 auto 30px auto; border-radius: 2px;"></div>
-
-
-                <h1 class="text-dark" style="margin: 0 0 10px 0; font-size: 22px; font-weight: 600;">Welcome, {{ $invitation->invitee_name }}</h1>
                 <p class="text-gray" style="margin: 0; font-size: 15px; line-height: 1.6; max-width: 90%;">
                     Thank you for accepting our invitation. Enclosed are your admission tickets.
                     <br>
