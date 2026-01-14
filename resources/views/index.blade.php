@@ -237,7 +237,7 @@
                 <div class="event-meta">
                     <div class="meta-item"><i class="far fa-calendar-alt"></i> {{ \Carbon\Carbon::parse($event->date)->format('D M d, Y') }}</div>
                     <div class="meta-item"><i class="far fa-clock"></i> {{$event->from_time}}-{{$event->to_time}}</div>
-                    <div class="meta-item"><a href="https://maps.app.goo.gl/CcbukaXy4DyZckLy7"><i class="far fa-location-dot"></i> {{$event->address}}</a></div>
+                    <div class="meta-item"><a href="https://maps.app.goo.gl/CcbukaXy4DyZckLy7"> <i class="fas fa-location-dot"></i> {{$event->address}}</a></div>
                 </div>
 
                 <div class="text-center mb-5">
