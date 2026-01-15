@@ -50,15 +50,11 @@
             <td align="center" style="padding-bottom: 40px;">
 
                 <div style="margin-bottom: 35px;">
-                    <div style="margin-bottom: 35px;">
-                        <img src="{{asset("Logo-SAMI.png")}}" alt="Logo-SAMI.png" style="width: 200px">
-                    </div>
+                    <img src="{{asset("top-banner.png")}}" alt="Logo-SAMI.png" style="width: 300px">
                 </div>
 
                 <div style="margin-bottom: 25px;">
-                    <h2 style="margin: 0 0 5px 0; font-size: 26px; font-weight: 800; color: #2D3748; letter-spacing: -0.5px; line-height: 1.2;">
-                        {{$event->title_en}}
-                    </h2>
+
                     <h2 style="margin: 0; font-size: 22px; font-weight: 600; color: #4A5568; line-height: 1.4; font-family: 'Segoe UI', Tahoma, sans-serif;">
                         {{$event->title}}
                     </h2>

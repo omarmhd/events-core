@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{$event->title_en}} - RSVP</title>
+    <title>{{$event->title}} - RSVP</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -23,80 +23,51 @@
             --shadow-card: 0 20px 40px -5px rgba(0, 0, 0, 0.08);
             --radius-lg: 24px;
             --beige-medium: #eaddca;
-            --beige-deep: #d2b48c;
-
-            /* --- اللون الذي ستختاره (خلفية الشعار والعنوان العربي) --- */
-            /* يمكنك تغيير هذا الكود (#224D59) إلى أي لون تريده */
-            --custom-bg-color: #224D59;
-            --custom-text-color: #ffffff; /* لون النص/الأيقونة فوق الخلفية */
         }
 
         body { font-family: 'Poppins', sans-serif; background-color: var(--bg-body); color: var(--text-dark); margin: 0; overflow-x: hidden; }
 
-        .top-banner {
-            background: linear-gradient(135deg, var(--beige-medium) 0%, var(--beige-deep) 100%);
-            height: 380px;
+        /* --- تعديل البانر ليكون صورة فقط --- */
+        .banner-wrapper {
             width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            height: 436px; /* يمكنك تعديل ارتفاع الصورة من هنا */
+            overflow: hidden;
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
             position: relative;
+            background-color: #eee; /* لون خلفية مؤقت حتى تظهر الصورة */
         }
 
-        /* --- حاوية الشعار الجديدة (مع الخلفية) --- */
-        .logo-container {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-
-            padding: 15px; /* مساحة داخلية حول الشعار */
-            border-radius: 16px; /* زوايا دائرية للخلفية */
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .banner-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* لضمان ملء الصورة للمساحة دون تمطيط */
+            display: block;
         }
 
-        .banner-logo {
-            width: 80px; /* التحكم بحجم الشعار هنا */
-            height: auto;
-            /* لم نعد بحاجة للـ absolute هنا لأن الحاوية تقوم بالمهمة */
+        /* --- تعديل العنوان العربي --- */
+        .page-title-container {
+            text-align: center;
+            padding: 30px 15px 10px 15px;
         }
 
-        .event-title { font-size: 2.8rem; font-weight: 800; color: #3e2b26; line-height: 1.2; }
-
-        /* --- تنسيق العنوان العربي (مع الخلفية) --- */
         .event-title-ar {
             font-family: 'Cairo', sans-serif;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
-
-
             color: #3e2b26;
-
-            display: inline-block; /* ليأخذ حجم النص فقط */
-            padding: 5px 25px;     /* هوامش داخلية */
-            border-radius: 50px;   /* شكل كبسولة */
-            margin-top: 15px;
+            margin: 0;
+            line-height: 1.4;
         }
 
         @media (max-width: 576px) {
-            .logo-container {
-                top: 20px;
-                left: 20px;
-                padding: 10px;
-            }
-            .banner-logo {
-                width: 50px;
-            }
-            .event-title { font-size: 2rem; }
-            .event-title-ar { font-size: 1.2rem; padding: 5px 15px; }
+            .banner-wrapper { height: 200px; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; }
+            .event-title-ar { font-size: 1.5rem; }
         }
 
-        .main-card-container { margin-top: -100px; padding-bottom: 50px; }
+        /* تعديل المسافات للكارت الرئيسي */
+        .main-card-container { margin-top: 0; padding-bottom: 50px; }
+
         .floating-card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 40px; border: 1px solid rgba(218, 188, 154, 0.2); }
         .event-meta { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #eee; }
         .meta-item { display: flex; align-items: center; gap: 10px; background: #fffaf5; padding: 12px 25px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; border: 1px solid var(--beige-medium); }
@@ -118,7 +89,6 @@
         @keyframes slideDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
         .spinner-border-sm { --bs-spinner-width: 1.3rem; --bs-spinner-height: 1.3rem; }
 
-        /* --- تصميم بطاقة الوصف (Description Card) --- */
         .description-card {
             background: #fdfcfb;
             border: 1px solid #efe6dc;
@@ -128,28 +98,15 @@
             max-width: 90%;
             position: relative;
         }
-
-        .description-card::before, .description-card::after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border: 1px solid #DABC9A;
-            transition: all 0.3s ease;
-        }
-
+        .description-card::before, .description-card::after { content: ''; position: absolute; width: 40px; height: 40px; border: 1px solid #DABC9A; transition: all 0.3s ease; }
         .description-card::before { top: -5px; left: -5px; border-right: none; border-bottom: none; border-radius: 12px 0 0 0; }
         .description-card::after { bottom: -5px; right: -5px; border-left: none; border-top: none; border-radius: 0 0 12px 0; }
 
-        .desc-en {
-            font-family: 'Poppins', sans-serif; font-size: 1.1rem; color: #555; font-weight: 500; line-height: 1.6; letter-spacing: 0.5px; margin-bottom: 20px;
-        }
+        .desc-en { font-family: 'Poppins', sans-serif; font-size: 1.1rem; color: #555; font-weight: 500; line-height: 1.6; letter-spacing: 0.5px; margin-bottom: 20px; }
         .desc-divider { display: flex; align-items: center; justify-content: center; margin: 15px 0; }
         .desc-divider span { height: 1px; width: 50px; background-color: #eaddca; }
         .desc-divider i { color: #DABC9A; margin: 0 15px; font-size: 10px; }
-        .desc-ar {
-            font-family: 'Cairo', sans-serif; font-size: 1.35rem; color: #2c2c2c; font-weight: 700; line-height: 1.7; margin-bottom: 0;
-        }
+        .desc-ar { font-family: 'Cairo', sans-serif; font-size: 1.35rem; color: #2c2c2c; font-weight: 700; line-height: 1.7; margin-bottom: 0; }
     </style>
 </head>
 <body>
@@ -158,46 +115,25 @@
     $hasResponded = $guest->status !== 'pending';
     $isAccepted = $guest->status === 'accepted';
     $isMaybe = $guest->status === 'maybe';
+    // تأكد من وضع رابط الصورة الصحيح هنا
+    $bannerImage = asset("top-banner.png");
 @endphp
 
-<div class="top-banner">
+<div class="banner-wrapper">
+    <img src="{{ $bannerImage }}" alt="Event Banner" class="banner-img">
+</div>
 
-    <div class="logo-container">
-        <svg class="banner-logo" xmlns="http://www.w3.org/2000/svg" id="Layer_2" viewBox="0 0 327.46 134.25">
-            <defs>
-                <style>
-                    /* جعلنا الشعار أبيض ليظهر بوضوح فوق الخلفية الملونة */
-                    .cls-1 { fill: #ffffff; }
-                    .cls-2 { fill: #ffffff; }
-                </style>
-            </defs>
-            <g id="Layer_1-2">
-                <g>
-                    <polygon class="cls-1" points="148.89 80.33 120.48 80.33 107.5 96.5 157.64 96.5 162.73 105.42 185.43 105.42 147.07 34.58 133.51 51.47 148.89 80.33"/>
-                    <polygon class="cls-1" points="297.5 34.58 297.5 34.58 272.73 34.58 244.71 72.75 216.46 34.58 191.63 34.58 191.6 34.58 191.6 105.42 211.56 105.42 211.56 61.51 244.77 106.4 277.68 61.58 277.68 105.42 297.64 105.42 297.64 34.58 297.5 34.58"/>
-                    <rect class="cls-1" x="307.5" y="34.58" width="19.96" height="70.85"/>
-                    <polygon class="cls-2" points="118.2 34.58 65.09 134.25 67.05 134.25 147.07 34.58 118.2 34.58"/>
-                    <polygon class="cls-2" points="149.8 0 124.42 25.37 149.8 25.37 149.8 0"/>
-                    <path class="cls-1" d="M83.39,53.85v-19.27H15.8c-5.59,.17-8.31,1.77-11.17,4.62-2.86,2.86-4.63,6.81-4.63,11.17,0,8.86,6.26,12.66,13,15.99l40.38,19.95H.54v19.11H70.69l13.29-24.95L27.33,53.85h56.06Z"/>
-                </g>
-            </g>
-        </svg>
-    </div>
-
-    <div class="container animate__animated animate__fadeIn" style="margin-top: -50px;">
-        <h1 class="event-title mb-0">{{$event->title_en}}</h1>
-
-        <h1 class="event-title-ar">{{$event->title}}</h1>
-    </div>
+<div class="page-title-container animate__animated animate__fadeIn">
+    <h1 class="event-title-ar">{{$event->title}}</h1>
 </div>
 
 <div class="container main-card-container">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">
+
             <div class="floating-card animate__animated animate__zoomIn mb-5"
                  id="successSection"
                  style="{{ $hasResponded ? 'display: block;' : 'display: none;' }}">
-
                 <div class="text-center py-5">
                     <div class="mb-4">
                         <i id="successIcon"
@@ -206,12 +142,9 @@
                                   @else far fa-check-circle text-muted @endif"
                            style="font-size: 5rem;"></i>
                     </div>
-
-                    <h2 class="fw-bold mb-3" id="successTitle"
-                        style="@if($isAccepted) color: #198754; @elseif($isMaybe) color: #ffc107; @else color: #6c757d; @endif">
+                    <h2 class="fw-bold mb-3" id="successTitle" style="@if($isAccepted) color: #198754; @elseif($isMaybe) color: #ffc107; @else color: #6c757d; @endif">
                         {{ $isAccepted ? 'Attendance Confirmed!' : ($isMaybe ? 'Response Recorded' : 'Response Recorded') }}
                     </h2>
-
                     <p class="lead mb-4" id="successMessage">
                         @if($hasResponded)
                             @if($isAccepted)
@@ -233,9 +166,9 @@
                  style="{{ $hasResponded ? 'display: none;' : 'display: block;' }}">
 
                 <div class="event-meta">
-                    <div class="meta-item"><i class="far fa-calendar-alt"></i> {{ \Carbon\Carbon::parse($event->date)->format('D M d, Y') }}</div>
+                    <div class="meta-item"><i class="far fa-calendar-alt"></i> {{ \Carbon\Carbon::parse($event->date)->format('l, F j, Y') }} | {{ \Carbon\Carbon::parse($event->date)->locale('ar')->translatedFormat('l، j F') }}</div>
                     <div class="meta-item"><i class="far fa-clock"></i> {{$event->from_time}}-{{$event->to_time}}</div>
-                    <div class="meta-item"><a href="https://maps.app.goo.gl/CcbukaXy4DyZckLy7"> <i class="fas fa-location-dot"></i> {{$event->address}}</a></div>
+                    <div class="meta-item"><a href="https://maps.app.goo.gl/CcbukaXy4DyZckLy7" style="color: black">  <i class="fa fa-location-dot"></i> {{$event->address}}|منتجع الديرة </a></div>
                 </div>
 
                 <div class="text-center mb-5">
@@ -244,19 +177,19 @@
                         <p class="desc-en" style="text-align: left">
                             {{$event->description_en}}
                         </p>
-
                         <div class="desc-divider">
                             <span></span>
                             <i class="fas fa-circle"></i>
                             <span></span>
                         </div>
-
                         <p class="desc-ar" style="text-align: right">
                             {{$event->description}}
                         </p>
-                    </div>                </div>
+                    </div>
+                </div>
 
-                <form id="rsvpForm">
+                <form id="rsvpForm" method="POST" action="{{ route('rsvp.submit', $guest->invitation_token) }}">
+                    @csrf
                     <input type="hidden" name="response_status" id="response_status">
 
                     <h5 class="fw-bold text-center mb-4">Will you be attending?</h5>
@@ -266,12 +199,10 @@
                             <i class="fas fa-check-circle" style="font-size: 2.5rem; margin-bottom: 15px; display: block; color: #d1d5db;"></i>
                             <h5>Yes, I'll Attend</h5>
                         </div>
-
                         <div class="status-tile" id="btnMaybe" onclick="selectStatus('maybe')">
                             <i class="fas fa-question-circle" style="font-size: 2.5rem; margin-bottom: 15px; display: block; color: #d1d5db;"></i>
                             <h5>Maybe</h5>
                         </div>
-
                         <div class="status-tile" id="btnDecline" onclick="selectStatus('declined')">
                             <i class="fas fa-times-circle" style="font-size: 2.5rem; margin-bottom: 15px; display: block; color: #d1d5db;"></i>
                             <h5>Sorry, I Can't</h5>
@@ -329,24 +260,19 @@
     const btnAccept = document.getElementById('btnAccept');
     const btnMaybe = document.getElementById('btnMaybe');
     const btnDecline = document.getElementById('btnDecline');
-
     const guestSection = document.getElementById('guestSection');
     const maybeSection = document.getElementById('maybeSection');
     const declineSection = document.getElementById('declineSection');
-
     const statusInput = document.getElementById('response_status');
 
     function selectStatus(status) {
         statusInput.value = status;
-
         btnAccept.classList.remove('active-accept');
         btnMaybe.classList.remove('active-maybe');
         btnDecline.classList.remove('active-decline');
-
         btnAccept.querySelector('i').style.color = '#d1d5db';
         btnMaybe.querySelector('i').style.color = '#d1d5db';
         btnDecline.querySelector('i').style.color = '#d1d5db';
-
         guestSection.style.display = 'none';
         maybeSection.style.display = 'none';
         declineSection.style.display = 'none';
@@ -356,13 +282,11 @@
             btnAccept.querySelector('i').style.color = '#198754';
             guestSection.style.display = 'block';
             guestSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
         } else if (status === 'maybe') {
             btnMaybe.classList.add('active-maybe');
             btnMaybe.querySelector('i').style.color = '#ffc107';
             maybeSection.style.display = 'block';
             maybeSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
         } else {
             btnDecline.classList.add('active-decline');
             btnDecline.querySelector('i').style.color = '#dc3545';
@@ -375,7 +299,6 @@
     if(form){
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-
             const formData = new FormData(this);
             const status = formData.get('response_status');
 
@@ -399,17 +322,18 @@
                 },
                 body: formData
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
                 .then(data => {
                     if(data.success) {
                         document.getElementById('mainFormCard').style.display = 'none';
                         document.getElementById('locationBox').style.display = 'none';
-
                         const successSection = document.getElementById('successSection');
                         const successTitle = document.getElementById('successTitle');
                         const successMsg = document.getElementById('successMessage');
                         const successIcon = document.getElementById('successIcon');
-
                         successSection.style.display = 'block';
 
                         if(status === 'accepted') {
@@ -428,30 +352,17 @@
                             successMsg.innerText = "Your response has been received. Thank you.";
                             successIcon.className = "far fa-check-circle text-muted";
                         }
-
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                 })
                 .catch(function (error) {
-                    let errorMessage = 'Something went wrong. Please try again.';
-                    alert(
-                        errorMessage +
-                        "\n\nIf you face any issues, please contact:\n" +
-                        "Abdulrahman Al Henaki\n📞 +966 55 185 8731"
-                    );
-
-                    if (error && error.response && error.response.data && error.response.data.message) {
-                        errorMessage = error.response.data.message;
-                    } else if (error && error.message) {
-                        errorMessage = error.message;
-                    }
-
-
+                    // Fallback to standard submit
+                    console.warn('AJAX failed, fallback to standard submit', error);
                     activeBtn.disabled = false;
                     btnText.style.opacity = '1';
                     spinner.classList.add('d-none');
+                    form.submit();
                 });
-
         });
     }
 </script>
