@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class EventInvitationController extends Controller
 {
@@ -139,20 +140,158 @@ class EventInvitationController extends Controller
 
         return view('index', compact('guest',"event"));
     }
+    use Throwable;
+    use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Log;
+    use Illuminate\Support\Facades\Validator;
+
+    public function submit(Request $request, string $token, QrCodeService $qrService)
+    {
+        try {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Debug Log (مؤقت)
+            |--------------------------------------------------------------------------
+            */
+            Log::info('RSVP DEBUG', [
+                'token' => $token,
+                'request' => $request->all(),
+                'ip' => $request->ip(),
+                'ua' => $request->userAgent(),
+            ]);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Get Invitation
+            |--------------------------------------------------------------------------
+            */
+            $guest = EventInvitation::where('invitation_token', $token)->firstOrFail();
+
+            if ($guest->status !== 'pending') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'تم الرد على هذه الدعوة مسبقًا'
+                ], 422);
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Validation
+            |--------------------------------------------------------------------------
+            */
+            $validator = Validator::make($request->all(), [
+                'response_status' => 'required|in:accepted,declined,maybe',
+                'guests_count' => 'nullable|integer|min:0|max:' . $guest->allowed_guests,
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $validator->errors()->first()
+                ], 422);
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Update Invitation
+            |--------------------------------------------------------------------------
+            */
+            $guest->update([
+                'status' => $request->response_status,
+                'responded_at' => now(),
+                'selected_guests' => $request->response_status === 'accepted'
+                    ? ($request->guests_count ?? 0)
+                    : 0,
+            ]);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Tickets + Email
+            |--------------------------------------------------------------------------
+            */
+            if (in_array($request->response_status, ['accepted', 'maybe'])) {
+
+                $tickets = [];
+
+                for ($i = 0; $i <= $guest->selected_guests; $i++) {
+
+                    $qrToken = (string) \Str::uuid();
+                    $type = $i === 0 ? 'Main' : 'Guest';
+
+                    InvitationQr::create([
+                        'event_invitation_id' => $guest->id,
+                        'type' => strtolower($type),
+                        'token' => $qrToken,
+                    ]);
+
+                    $tickets[] = [
+                        'label' => $type,
+                        'qr' => $qrService->generateBase64($qrToken),
+                    ];
+                }
+
+                $event = Event::whereNotNull('name')->first();
+
+                \Mail::to($guest->invitee_email)
+                    ->send(new TicketMail($guest, $tickets, $event));
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Response saved successfully'
+            ]);
+
+        } catch (Throwable $e) {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Catch ANY error (مهم)
+            |--------------------------------------------------------------------------
+            */
+            Log::error('RSVP ERROR', [
+                'token' => $token,
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ غير متوقع، يرجى المحاولة لاحقًا'
+            ], 500);
+        }
+    }
 
 
-    public function submit(Request $request, $token,QrCodeService $qrService)
+    public function submit_OLD(Request $request, $token,QrCodeService $qrService)
         {
+
+            \Log::info('RSVP DEBUG', [
+                'token' => $token,
+                'request' => $request->all(),
+                'headers' => $request->headers->all(),
+                'ip' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+            ]);
             $guest = EventInvitation::where('invitation_token', $token)->firstOrFail();
             if ($guest->status !== 'pending') {
                 return response()->json([
                     'message' => 'تم الرد على هذه الدعوة مسبقًا'
                 ], 422);
             }
-            $request->validate([
+            $validator = Validator::make($request->all(), [
                 'response_status' => 'required|in:accepted,declined,maybe',
-                'guests_count' => 'nullable|integer|min:0|max:'.$guest->allowed_guests,
+                'guests_count' => 'nullable|integer|min:0|max:' . $guest->allowed_guests,
             ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $validator->errors()->first()
+                ], 422);
+            }
+
 
             $guest->update([
                 'status' => $request->response_status,
