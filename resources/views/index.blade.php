@@ -51,7 +51,7 @@
             position: absolute;
             top: 30px;
             left: 30px;
-            background-color: var(--custom-bg-color); /* استخدام اللون المختار */
+
             padding: 15px; /* مساحة داخلية حول الشعار */
             border-radius: 16px; /* زوايا دائرية للخلفية */
             box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* ظل خفيف */
@@ -75,8 +75,8 @@
             font-size: 2rem;
             font-weight: 700;
 
-            background-color: var(--custom-bg-color); /* نفس لون خلفية الشعار */
-            color: var(--custom-text-color);          /* لون النص */
+
+            color: #3e2b26;
 
             display: inline-block; /* ليأخذ حجم النص فقط */
             padding: 5px 25px;     /* هوامش داخلية */
