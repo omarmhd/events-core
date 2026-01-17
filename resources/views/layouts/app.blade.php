@@ -86,7 +86,7 @@
 
 {{-- Mobile Toggle Header --}}
 <div class="mobile-header d-lg-none">
-    <div class="fw-bold fs-5 text-dark">Event<span style="color: #6366f1;">Flow</span></div>
+    <div class="fw-bold fs-5 text-dark">Sami<span style="color: #6366f1;">Event</span></div>
     <button class="btn btn-light border" onclick="toggleSidebar()">
         <i class="fas fa-bars"></i>
     </button>

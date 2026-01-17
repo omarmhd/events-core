@@ -32,8 +32,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get("emps",[\App\Http\Controllers\AdminController::class,"all_emps"])->name("emps");
     Route::post("resendTickets",[\App\Http\Controllers\HomeController::class,"resendTickets"])->name("resendTickets");
+
     Route::resource("invitations",EventInvitationController::class);
     Route::post('/invitations/resend', [\App\Http\Controllers\EventInvitationController::class, 'resend'])->name("invitations.resend");
+
+    Route::get("attendance",[\App\Http\Controllers\AttendanceManagement::class,"index"])->name("attendance_list");
+    Route::post("attendance/checked_in",[\App\Http\Controllers\AttendanceManagement::class,"checked_in"])->name("attendance.checked_in");
 
 });
 Route::get('/rsvp/{token}', [\App\Http\Controllers\EventInvitationController::class, 'showByToken'])->name("rsvp.show");

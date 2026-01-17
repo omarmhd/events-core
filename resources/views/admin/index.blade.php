@@ -191,7 +191,7 @@
                 </a>
             </div>
 
-            <div class="col-12 col-md-6 col-lg-3 animate__animated animate__fadeInUp delay-3 disabled-card">
+            <div class="col-12 col-md-6 col-lg-3 animate__animated animate__fadeInUp delay-3">
                 <a href="{{ route('attendance_list') }}" class="dashboard-card">
 {{--                    <div class="stat-badge text-success" title="Checked In">--}}
 {{--                        <span class="spinner-grow spinner-grow-sm me-1" style="width: 8px; height: 8px;" role="status"></span>--}}
@@ -199,14 +199,14 @@
 {{--                    </div>--}}
 
                     <div class="icon-container bg-grad-green">
-                        <i class="fas fa-table-list"></i>
+                        <i class="fas fa-ticket"></i>
                     </div>
-                    <h3 class="card-label">Checked-in Employees</h3>
-                    <p class="card-desc">Employees who attended the meeting</p>
+                    <h3 class="card-label">Tickets</h3>
+                    <p class="card-desc">View tickets and record attendance for invitees, whether main invitations or accompanying guests.</p>
                 </a>
             </div>
 
-            <div class="col-12 col-md-6 col-lg-3 animate__animated animate__fadeInUp delay-4 disabled-card">
+            <div class="col-12 col-md-6 col-lg-3 animate__animated animate__fadeInUp delay-4">
                 <a href="{{ route('statistics') }}" class="dashboard-card">
 {{--                    <div class="stat-badge" title="Completion Rate">--}}
 {{--                        <i class="fas fa-chart-line text-xs opacity-50"></i> 92%--}}
@@ -216,7 +216,7 @@
                         <i class="fas fa-chart-pie"></i>
                     </div>
                     <h3 class="card-label">Analytics</h3>
-                    <p class="card-desc">Data insights & reports</p>
+                    <p class="card-desc">Data insights</p>
                 </a>
             </div>
         </div>

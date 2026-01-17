@@ -25,5 +25,10 @@ class EventInvitation extends Model
         'invitation_token'
     ];
 
+    public function InvitationQrs(){
+
+        return $this->hasMany(InvitationQr::class);
+    }
+
 
 }

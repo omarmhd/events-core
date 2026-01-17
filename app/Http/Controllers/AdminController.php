@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\TicketExport;
 use App\Models\Employee;
+use App\Models\EventInvitation;
 use App\Models\InvitationQr;
 use App\Models\Ticket;
 use Carbon\Carbon;
@@ -124,15 +125,52 @@ class AdminController extends Controller
         return view("admin.attendance_list",compact("tickets"));
     }
     public function statistics(){
-        $checked_public = Ticket::where("checked_in_at", "<>", null)->count();//عدد الحضور
-        $checked_emp= Ticket::where("checked_in_at", "<>", null)->where("is_children", "no")->count();//عدد الحضور الموظفين
-        $checked_ch= Ticket::where("checked_in_at", "<>", null)->where("is_children", "yes")->count();//عدد الحضور اطفال
-        $tickets_all= Ticket::count();//عدد تذاكر الجميع
-        $tickets_emp= Ticket::where("is_children", "no")->count();//عدد تذاكر الجميع   طفال
-        $tickets_ch= Ticket::where("is_children", "yes")->count();//عدد تذاكر الجميع   طفال
+        // 1. إحصائيات الدعوات (Status Breakdown)
+        $invitationStats = EventInvitation::selectRaw('
+            count(*) as total,
+            sum(case when status = "pending" then 1 else 0 end) as pending,
+            sum(case when status = "accepted" then 1 else 0 end) as accepted,
+            sum(case when status = "declined" then 1 else 0 end) as declined,
+            sum(case when status = "maybe" then 1 else 0 end) as maybe,
+            sum(allowed_guests) as total_seats_allocated,
+            sum(selected_guests) as total_guests_confirmed
+        ')->first();
 
-        return view("admin.statistics",compact(["checked_public","checked_emp","checked_ch","tickets_all","tickets_emp","tickets_ch"]));
-    }
+        // 2. إحصائيات التذاكر والحضور الفعلي (Tickets & Attendance)
+        $ticketStats = InvitationQr::selectRaw('
+            count(*) as total_issued,
+            sum(case when is_used = 1 then 1 else 0 end) as total_checked_in,
+
+            sum(case when type = "main" then 1 else 0 end) as main_issued,
+            sum(case when type = "main" and is_used = 1 then 1 else 0 end) as main_checked_in,
+
+            sum(case when type = "guest" then 1 else 0 end) as guest_issued,
+            sum(case when type = "guest" and is_used = 1 then 1 else 0 end) as guest_checked_in
+        ')->first();
+
+        // 3. تحليل أوقات الوصول (Peak Hours) - آخر 24 ساعة أو حسب الحدث
+        $arrivalTimeline = InvitationQr::where('is_used', true)
+            ->selectRaw('HOUR(used_at) as hour, count(*) as count')
+            ->groupBy('hour')
+            ->orderBy('hour')
+            ->get();
+
+        // حساب النسب المئوية لتسهيل العرض
+        $attendanceRate = $ticketStats->total_issued > 0
+            ? round(($ticketStats->total_checked_in / $ticketStats->total_issued) * 100, 1)
+            : 0;
+
+        $responseRate = $invitationStats->total > 0
+            ? round((($invitationStats->accepted + $invitationStats->declined) / $invitationStats->total) * 100, 1)
+            : 0;
+
+        return view('admin.statistics', compact(
+            'invitationStats',
+            'ticketStats',
+            'arrivalTimeline',
+            'attendanceRate',
+            'responseRate'
+        ));    }
 
     public function export()
     {

@@ -6,6 +6,19 @@
     .nav-link-custom.active { background: #eff6ff; color: var(--primary-color); font-weight: 700; }
     .nav-link-custom i { width: 24px; }
     .info-card { background: var(--grad-blue); color: white; border-radius: 20px; padding: 1.5rem; position: relative; overflow: hidden; }
+    .btn-logout {
+        padding: 0.6rem 2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #ef4444;
+        background: white;
+        border: 1px solid #fee2e2;
+        transition: 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
 </style>
 
 <div class="sidebar-wrapper">
@@ -25,14 +38,27 @@
             <a href="{{ route('invitations.index') }}" class="nav-link-custom {{ request()->routeIs('emps') ? 'active' : '' }}">
                 <i class="fas fa-ticket-alt"></i>Invitations
             </a>
-            <a href="#" class="nav-link-custom">
+            <a href="{{route("qr")}}" class="nav-link-custom">
                 <i class="fas fa-qrcode"></i>QR Scanner
             </a>
+            <a href="{{route("attendance_list")}}" class="nav-link-custom">
+                <i class="fas fa-qrcode"></i>Tickets
+            </a>
 
-{{--            <a href="#" class="nav-link-custom">--}}
-{{--                <i class="fas fa-chart-pie"></i> Overview/Analytics--}}
-{{--            </a>--}}
+            <a href="{{route("statistics")}}" class="nav-link-custom">
+                <i class="fas fa-chart-pie"></i> Overview/Analytics
+            </a>
+            <div class="text-center animate__animated animate__fadeIn animate__delay-2s">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn-logout shadow-sm">
+                        <i class="fas fa-power-off"></i> Sign Out
+                    </button>
+                </form>
+            </div>
+
         </div>
+
     </div>
 
     @yield("infoCard")
