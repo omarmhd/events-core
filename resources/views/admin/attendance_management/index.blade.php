@@ -224,7 +224,7 @@
             @endforelse
 
             {{-- Pagination Links --}}
-            <div class="mt-4">
+            <div class="mt-4 text-center">
                 {{ $rows->links() }}
             </div>
 
