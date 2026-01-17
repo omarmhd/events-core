@@ -158,7 +158,6 @@
                                 <button class="btn btn-outline-primary w-100 d-md-none" {{ !$mainTicket ? 'disabled' : '' }}>
                                     Check-in Main
                                 </button>
-                                 Desktop Button (Icon)
                                 <button class="d-none d-md-inline-block btn btn-light btn-sm text-success border shadow-sm" {{ !$mainTicket ? 'disabled' : '' }} title="Check-in">
                                     <i class="fas fa-user-check"></i>
                                 </button>
