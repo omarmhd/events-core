@@ -139,9 +139,7 @@
                                            $descEn = strip_tags($event->description_en);
                                            $descAr = strip_tags($event->description);
 
-                                           @php
-$whatsappMessage =
-    "{$row->invitee_name},\n\n" .
+                                           $whatsappMessage =  "{$row->invitee_name},\n\n" .
     "{$descAr}\n\n" .
     "{$descEn}\n\n" .
     "للاطلاع على تفاصيل الدعوة / View invitation details:\n" .
