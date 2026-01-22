@@ -21,18 +21,7 @@ class TicketExport implements FromCollection, WithHeadings, WithMapping,WithStyl
     }
     public function headings(): array
     {
-        $table->foreignId('event_id')->nullable()->constrained("events")->cascadeOnDelete();
-        $table->foreignId('company_id')->nullable()->constrained()->cascadeOnDelete();
-        $table->string('invitee_name');
-        $table->string('invitee_email')->nullable();
-        $table->string('invitee_phone')->nullable();
-        $table->string('invitee_position')->nullable();
-        $table->string('invitee_nationality')->nullable();
-        $table->uuid('invitation_token')->unique();
-        $table->string('status', 20)->default('pending')->index();
-        $table->unsignedTinyInteger('allowed_guests')->default(1);
-        $table->unsignedTinyInteger('selected_guests')->default(0);
-        $table->timestamp('responded_at')->nullable();
+
         return [
             'Invitation #',
             'Invitee Name',
