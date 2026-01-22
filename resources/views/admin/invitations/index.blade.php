@@ -132,21 +132,22 @@
                                 </div>
                             </td>
                             <td class="text-end pe-4">
-
                                 @php
-                                    // 1. رابط الدعوة
-                                    $invitationLink = route('invitations.show', $row->id);
+                                           $invitationLink = route('rsvp.show',$row->invitation_token);
 
-                                    // 2. تنظيف الوصف من أي أكواد HTML ليظهر كنص عادي في الرسالة
-                                    // استخدمنا strip_tags لإزالة الـ HTML
-                                    $descEn = strip_tags($event->description_en);
-                                    $descAr = strip_tags($event->description);
 
-                                    // 3. صياغة الرسالة الكاملة
-                                    $whatsappMessage = " {$row->invitee_name},\n\n{$descEn}\n\nPlease view the details and RSVP via the link below:\n\n" .
-                                                       "--------------------\n\n" .
-                                                       " {$row->invitee_name}،\n\n{$descAr}\n\nيرجى الاطلاع على التفاصيل وتأكيد الحضور عبر الرابط أدناه:\n\n{$invitationLink}";
+                                           $descEn = strip_tags($event->description_en);
+                                           $descAr = strip_tags($event->description);
+
+                                           @php
+$whatsappMessage =
+    "{$row->invitee_name},\n\n" .
+    "{$descAr}\n\n" .
+    "{$descEn}\n\n" .
+    "للاطلاع على تفاصيل الدعوة / View invitation details:\n" .
+    "{$invitationLink}";
                                 @endphp
+
 
                                 {{-- زر النسخ --}}
                                 <button type="button"
