@@ -134,7 +134,13 @@
                             <td class="text-end pe-4">
                                 @php
                                            $invitationLink = route('rsvp.show',$row->invitation_token);
+                                            $ticketsLink = route('downloadPdf', $row->invitation_token);
 
+
+    $whatsappMessageTickets =  "{$row->invitee_name},\n\n" .
+                              "Thank you for accepting the invitation.\n\n" .
+                              "You can download your tickets here:\n" .
+                              "{$ticketsLink}";
 
                                            $descEn = strip_tags($event->description_en);
                                            $descAr = strip_tags($event->description);
@@ -144,10 +150,20 @@
     "{$descEn}\n\n" .
     "للاطلاع على تفاصيل الدعوة / View invitation details:\n" .
     "{$invitationLink}";
+
+
+
                                 @endphp
 
 
-                                {{-- زر النسخ --}}
+
+
+                                <button type="button"
+                                        class="btn btn-light btn-sm"
+                                        onclick="copyToClipboard(this, `{{ $whatsappMessageTickets }}`)"
+                                        title="Copy Tickets Link">
+                                    <i class="fas fa-ticket-alt me-2"></i> Copy Tickets Link
+                                </button>
                                 <button type="button"
                                         class="btn btn-light btn-sm text-dark border shadow-sm me-1"
                                         onclick="copyToClipboard(this, `{{ $whatsappMessage }}`)"

@@ -46,3 +46,5 @@ Route::post('/rsvp/{token}/submit', [\App\Http\Controllers\EventInvitationContro
 Route::get('/login', [\App\Http\Controllers\LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [\App\Http\Controllers\LoginController::class, 'login']);
 Route::post('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
+
+Route::get("downloadTicketsPdf/{token}",[\App\Http\Controllers\EventInvitationController::class,"downloadPdf"])->name("downloadPdf");

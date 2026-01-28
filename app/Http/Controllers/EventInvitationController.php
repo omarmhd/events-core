@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Throwable;
 
 use Illuminate\Support\Facades\Log;
@@ -194,11 +195,7 @@ class EventInvitationController extends Controller
                 ], 422);
             }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Update Invitation
-            |--------------------------------------------------------------------------
-            */
+
             $guest->update([
                 'status' => $request->response_status,
                 'responded_at' => now(),
@@ -207,11 +204,7 @@ class EventInvitationController extends Controller
                     : 0,
             ]);
 
-            /*
-            |--------------------------------------------------------------------------
-            | Tickets + Email
-            |--------------------------------------------------------------------------
-            */
+
             if (in_array($request->response_status, ['accepted', 'maybe'])) {
 
                 $tickets = [];
@@ -246,11 +239,7 @@ class EventInvitationController extends Controller
 
         } catch (Throwable $e) {
 
-            /*
-            |--------------------------------------------------------------------------
-            | Catch ANY error (مهم)
-            |--------------------------------------------------------------------------
-            */
+
             Log::error('RSVP ERROR', [
                 'token' => $token,
                 'message' => $e->getMessage(),
@@ -347,6 +336,44 @@ class EventInvitationController extends Controller
             ->with('success', 'Invitation deleted successfully');
 
     }
+    public function downloadPdf($token,QrCodeService $qrService)
+    {
 
+        $invitation = EventInvitation::with(['InvitationQrs'])->where('invitation_token', $token)->firstOrFail();
+
+        $event=Event::where("name","!=",null)->first();
+
+        $tickets = [];
+
+        foreach ($invitation->InvitationQrs as $qrRecord) {
+
+            $qrImageSrc = $qrService->generateBase64($qrRecord->token);
+
+            $label = ($qrRecord->type === 'main') ? 'Main' : 'Guest';
+
+            $tickets[] = [
+                'label'   => ($qrRecord->type === 'main') ? 'Main' : 'Guest',
+                'qr'      => $qrImageSrc,
+                'qr_raw'  => $qrRecord->token
+            ];
+        }
+
+        if (empty($tickets)) {
+            return back()->with('error', 'No tickets generated yet.');
+        }
+
+        // 4. إعداد ملف الـ PDF وتمرير البيانات
+        $pdf = Pdf::loadView('tickets', [
+            'invitation' => $invitation,
+            'tickets'    => $tickets,
+            'event'      => $event
+        ]);
+
+        // إعدادات الورقة (A4 عمودي)
+        $pdf->setPaper('a4', 'portrait');
+
+        // 5. تحميل الملف
+        return $pdf->download('Event-Ticket-' . $invitation->name . '.pdf');
+    }
 
 }
