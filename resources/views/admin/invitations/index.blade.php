@@ -156,7 +156,7 @@
                                 @endphp
 
 
-
+                                @if($row->status!="pending")
 
                                 <button type="button"
                                         class="btn btn-light btn-sm"
@@ -165,14 +165,14 @@
                                     <i class="fas fa-ticket-alt me-2"></i> Copy Tickets Link
                                 </button>
 
-                                @if($row->status!="pending")
+                                @endif
                                 <button type="button"
                                         class="btn btn-light btn-sm text-dark border shadow-sm me-1"
                                         onclick="copyToClipboard(this, `{{ $whatsappMessage }}`)"
                                         title="Copy Invitation Message">
                                     <i class="fas fa-copy"></i>
                                 </button>
-                                @endif
+
                                 <form action="{{ route('invitations.resend') }}" method="POST" class="d-inline" onsubmit="return confirm('Regenerate ticket?');">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $row->id }}">
