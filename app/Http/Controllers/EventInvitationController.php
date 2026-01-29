@@ -62,7 +62,36 @@ class EventInvitationController extends Controller
 
         return view('admin.invitations.index', compact('rows','stats','event'));
     }
+    public function edit($id){
+        $eventInvitation=EventInvitation::findOrFail($id);
+        return view("admin.invitations.edit",["row"=>$eventInvitation]);
 
+    }
+    public function update(Request $request, $id)
+    {
+        $invitation = EventInvitation::findOrFail($id);
+
+        $request->validate([
+            'invitee_name'        => 'required|string|max:255',
+            'invitee_email'       => 'required|email|unique:event_invitations,invitee_email,' . $id,
+            'invitee_position'    => 'nullable|string|max:255',
+            'invitee_nationality' => 'nullable|string|max:255',
+            'allowed_guests'      => 'required|integer|min:0|max:10',
+        ]);
+
+        $invitation->update([
+            'invitee_name'        => $request->invitee_name,
+            'invitee_email'       => $request->invitee_email,
+            'invitee_position'    => $request->invitee_position,
+            'invitee_nationality' => $request->invitee_nationality,
+            'allowed_guests'      => $request->allowed_guests,
+        ]);
+
+
+        return redirect()
+            ->route('invitations.index') // العودة لصفحة القائمة
+            ->with('success', 'Invitation updated successfully');
+    }
     public function create(){
         return view("admin.invitations.create");
 
