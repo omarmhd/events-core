@@ -243,8 +243,8 @@
                                        style="padding-left: 10px;"
                                        id="allowed_guests"
                                        name="allowed_guests"
-                                       value="{{ old('allowed_guests', 2) }}"
-                                       min="2">
+                                       value="{{ old('allowed_guests',0) }}"
+                                       min="0">
                             </div>
                         </div>
                         @error('allowed_guests')

@@ -217,7 +217,7 @@
                                    id="invitee_nationality"
                                    name="invitee_nationality"
                                    placeholder=""
-                                   value="{{ old('invitee_nationality',$row->invitee_position) }}">
+                                   value="{{ old('invitee_nationality',$row->invitee_nationality) }}">
                         </div>
                         @error('invitee_nationality')
                         <div class="error-bubble">
@@ -245,7 +245,7 @@
                                        id="allowed_guests"
                                        name="allowed_guests"
                                        value="{{ old('allowed_guests', $row->allowed_guests) }}"
-                                       min="2">
+                                      >
                             </div>
                         </div>
                         @error('allowed_guests')
