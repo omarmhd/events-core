@@ -24,7 +24,7 @@
 <div class="sidebar-wrapper">
     <div class="sidebar-brand">
 {{--        <div class="brand-icon"><i class="fas fa-layer-group"></i></div>--}}
-            <div class="fw-bold fs-5 text-dark">SAMI<span style="color: #6366f1;">Event</span></div>
+            <div class="fw-bold fs-5 text-dark">OSP<span style="color: #6366f1;">Event</span></div>
     </div>
 
     <div class="card border-0 shadow-sm rounded-4 mb-4">

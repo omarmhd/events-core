@@ -1,6 +1,6 @@
 @extends('layouts.abstract')
 
-@section('title', 'SAMI Event Dashboard')
+@section('title', 'OSP Event Dashboard')
 
 @section('content')
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -155,7 +155,7 @@
 
         <header class="dashboard-header text-center animate__animated animate__fadeInDown">
             <div class="brand-section">
-                <div class="brand-text">SAMI<span>Event</span></div>
+                <div class="brand-text">OSP<span>Event</span></div>
             </div>
             <h2 class="fw-bold mb-2">Welcome Back, Admin</h2>
             <p class="welcome-text">Select a module to manage your event.</p>
