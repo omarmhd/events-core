@@ -12,8 +12,8 @@
         a { text-decoration: none; }
 
         /* Typography & Colors */
-        .text-gold { color: #C5A065; }
-        .bg-gold { background-color: #C5A065; }
+        .text-gold { color: #176B8E; }
+        .bg-gold { background-color: #176B8E; }
         .text-dark { color: #2D3748; }
         .text-gray { color: #718096; }
 
@@ -31,7 +31,7 @@
             padding: 15px;
             background-color: #FAFAFA;
             border-radius: 8px;
-            border: 1px dashed #DCC8A8;
+            border: 1px dashed #176B8E;
             display: inline-block;
         }
 

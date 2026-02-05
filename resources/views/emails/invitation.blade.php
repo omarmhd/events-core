@@ -11,19 +11,19 @@
         a { text-decoration: none; }
 
         /* Colors */
-        .text-gold { color: #C5A065; }
+        .text-gold { color: #176B8E; }
         .text-gray { color: #718096; }
 
         /* Button Style */
         .btn-gold {
-            background-color: #C5A065;
+            background-color: rgba(23, 107, 142, 0.51);
             color: #ffffff !important;
             padding: 14px 30px;
             border-radius: 6px;
             font-weight: bold;
             display: inline-block;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 10px rgba(197, 160, 101, 0.3);
+            box-shadow: 0 4px 10px rgba(101, 128, 197, 0.3);
             transition: all 0.3s ease;
             text-align: center;
         }
@@ -33,7 +33,7 @@
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            border-top: 5px solid #C5A065;
+            border-top: 5px solid #176B8E;
             overflow: hidden;
             max-width: 600px;
             margin: 0 auto;
@@ -92,7 +92,6 @@
                             Respond to Invitation
                             <br><span style="font-weight: normal; font-size: 13px;">الرد على الدعوة</span>
                         </a>
-                        <p>If you faced any issues kindly contact Abdulrahman Al Henaki: +966551858731</p>
                     </div>
 
                     <p style="margin: 0; font-size: 12px; color: #CBD5E0;">
