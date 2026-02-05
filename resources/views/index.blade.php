@@ -15,14 +15,14 @@
 
     <style>
         :root {
-            --primary-color: #DABC9A;
-            --primary-dark: #b89b7c;
+            --primary-color: #176b8e;
+            --primary-dark: #6fa7be;
             --text-dark: #1F2937;
             --bg-body: #Fcfbf9;
             --white: #ffffff;
             --shadow-card: 0 20px 40px -5px rgba(0, 0, 0, 0.08);
             --radius-lg: 24px;
-            --beige-medium: #eaddca;
+            --beige-medium: #6fa7be;
         }
 
         body { font-family: 'Poppins', sans-serif; background-color: var(--bg-body); color: var(--text-dark); margin: 0; overflow-x: hidden; }
