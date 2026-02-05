@@ -226,7 +226,7 @@
                     </div>
 
                     {{-- Allowed Guests Field --}}
-                    <div class="col-12">
+                    <div class="col-6">
                         <div class="p-3 bg-light rounded-4 border d-flex align-items-center justify-content-between @error('allowed_guests') border-danger bg-danger bg-opacity-10 @enderror">
                             <div class="d-flex align-items-center gap-3">
                                 <div class="bg-white p-2 rounded-3 text-muted border shadow-sm">
@@ -246,12 +246,42 @@
                                        value="{{ old('allowed_guests',0) }}"
                                        min="0">
                             </div>
+
                         </div>
                         @error('allowed_guests')
                         <div class="error-bubble">
                             <i class="fas fa-exclamation-circle"></i> <span>{{ $message }}</span>
                         </div>
                         @enderror
+                    </div>
+
+                    {{-- Send Email Option --}}
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded-4 border d-flex align-items-center justify-content-between cursor-pointer hover-shadow transition-all"
+                             onclick="document.getElementById('should_send_email').click()">
+
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-white p-2 rounded-3 text-primary border shadow-sm">
+                                    <i class="fas fa-paper-plane"></i>
+                                </div>
+                                <div>
+                                    <label class="form-label mb-0" style="cursor: pointer;">Send Invitation Email</label>
+                                    <div class="text-muted small">
+                                        If enabled, an email containing the link will be sent immediately.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-check form-switch" style="font-size: 1.2rem;">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       role="switch"
+                                       id="should_send_email"
+                                       name="send_email"
+                                       value="0"
+                                       {{ old('send_email', 0) ? 'checked' : '' }}
+                                       onclick="event.stopPropagation()"> </div>
+                        </div>
                     </div>
                 </div>
 

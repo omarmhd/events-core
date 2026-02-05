@@ -104,6 +104,7 @@ class EventInvitationController extends Controller
             'invitee_email' => 'required|email|unique:event_invitations,invitee_email',            'invitee_position'   => 'nullable|string|max:255',
             'invitee_nationality'=> 'nullable|string|max:255',
             'allowed_guests'     => 'required|integer|min:0|max:10',
+            'send_email'     => 'required|boolean',
         ]);
 
         $invitation = EventInvitation::create([
@@ -115,6 +116,7 @@ class EventInvitationController extends Controller
             'invitee_nationality' => $request->invitee_nationality,
             'allowed_guests'      => $request->allowed_guests,
             'invitation_token'    => Str::uuid(),
+            'should_send_email'=>$request->send_email
         ]);
 
         $invitationLink = route(
@@ -123,7 +125,7 @@ class EventInvitationController extends Controller
         );
         $event=Event::where("name","!=",null)->first();
 
-        if ($invitation->invitee_email) {
+        if ($invitation->invitee_email and $request->send_email) {
             Mail::to($invitation->invitee_email)
                 ->send(new InvitationSent($invitation, $invitationLink,$event));
         }
