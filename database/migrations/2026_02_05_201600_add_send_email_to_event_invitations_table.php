@@ -14,8 +14,10 @@ class AddSendEmailToEventInvitationsTable extends Migration
     public function up()
     {
         Schema::table('event_invitations', function (Blueprint $table) {
-            $table->addColumn("boolean","send_email")->after("invitee_email");
-        });
+            $table->boolean('send_email')
+                ->default(true)
+                ->after('allowed_guests')
+                ->comment('Determines if the invitation email should be sent');        });
     }
 
     /**

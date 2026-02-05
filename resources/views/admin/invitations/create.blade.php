@@ -278,7 +278,6 @@
                                        role="switch"
                                        id="should_send_email"
                                        name="send_email"
-                                       value="0"
                                        {{ old('send_email', 0) ? 'checked' : '' }}
                                        onclick="event.stopPropagation()"> </div>
                         </div>

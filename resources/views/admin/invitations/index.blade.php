@@ -135,6 +135,7 @@
                         <th>Job Title</th>
                         <th class="text-center">Guests</th>
                         <th class="text-center">Status</th>
+                        <th class="text-center">Send Email</th>
                         <th>Sent Date</th>
                         <th>Responded Date</th>
                         <th class="text-end pe-4">Actions</th>
@@ -175,6 +176,21 @@
                                 @endphp
                                 <span class="badge-soft {{ $statusClass }}">{{ ucfirst($row->status) }}</span>
                             </td>
+
+                            <td class="align-middle text-center">
+                                @if($row->send_email)
+                                    {{-- Email Sent --}}
+                                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2">
+            <i class="fas fa-check-circle me-1"></i> Sent
+        </span>
+                                @else
+                                    {{-- Not Sent --}}
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3 py-2">
+            <i class="fas fa-comment-slash me-1"></i> Skipped
+        </span>
+                                @endif
+                            </td>
+
                             <td>
                                 <div class="small fw-bold text-dark">{{ \Carbon\Carbon::parse($row->created_at)->format('M d, Y') }}</div>
                             </td>
