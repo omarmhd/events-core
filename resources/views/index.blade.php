@@ -78,8 +78,8 @@
         .status-tile:hover { border-color: var(--primary-color); transform: translateY(-4px); }
         .status-tile.active-accept { border-color: #198754; background-color: #f2fcf6; }
         .status-tile.active-accept i { color: #198754 !important; }
-        .status-tile.active-maybe { border-color: #ffc107; background-color: #fffbf0; }
-        .status-tile.active-maybe i { color: #ffc107 !important; }
+        .status-tile.active-maybe { border-color: #6fa7be; background-color: #fffbf0; }
+        .status-tile.active-maybe i { color: #6fa7be !important; }
         .status-tile.active-decline { border-color: #dc3545; background-color: #fef5f5; }
         .status-tile.active-decline i { color: #dc3545 !important; }
 
@@ -90,7 +90,7 @@
 
         .description-card {
             background: #fdfcfb;
-            border: 1px solid #efe6dc;
+            border: 1px solid #6fa7be;
             border-radius: 12px;
             padding: 30px 20px;
             margin: 0 auto 40px auto;
@@ -298,7 +298,7 @@
             guestSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         } else if (status === 'maybe') {
             btnMaybe.classList.add('active-maybe');
-            btnMaybe.querySelector('i').style.color = '#ffc107';
+            btnMaybe.querySelector('i').style.color = '#6fa7be';
             maybeSection.style.display = 'block';
             maybeSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         } else {
