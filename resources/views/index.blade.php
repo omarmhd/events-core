@@ -67,7 +67,7 @@
         /* تعديل المسافات للكارت الرئيسي */
         .main-card-container { margin-top: 0; padding-bottom: 50px; }
 
-        .floating-card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 40px; border: 1px solid rgba(218, 188, 154, 0.2); }
+        .floating-card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); padding: 40px; border: 1px solid rgba(111, 167, 190, 0.19); }
         .event-meta { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #eee; }
         .meta-item { display: flex; align-items: center; gap: 10px; background: #fffaf5; padding: 12px 25px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; border: 1px solid var(--beige-medium); }
 
@@ -97,14 +97,14 @@
             max-width: 90%;
             position: relative;
         }
-        .description-card::before, .description-card::after { content: ''; position: absolute; width: 40px; height: 40px; border: 1px solid #DABC9A; transition: all 0.3s ease; }
+        .description-card::before, .description-card::after { content: ''; position: absolute; width: 40px; height: 40px; border: 1px solid #6fa7be; transition: all 0.3s ease; }
         .description-card::before { top: -5px; left: -5px; border-right: none; border-bottom: none; border-radius: 12px 0 0 0; }
         .description-card::after { bottom: -5px; right: -5px; border-left: none; border-top: none; border-radius: 0 0 12px 0; }
 
         .desc-en { font-family: 'Poppins', sans-serif; font-size: 1.1rem; color: #555; font-weight: 500; line-height: 1.6; letter-spacing: 0.5px; margin-bottom: 20px; }
         .desc-divider { display: flex; align-items: center; justify-content: center; margin: 15px 0; }
-        .desc-divider span { height: 1px; width: 50px; background-color: #eaddca; }
-        .desc-divider i { color: #DABC9A; margin: 0 15px; font-size: 10px; }
+        .desc-divider span { height: 1px; width: 50px; background-color: #c7dce5; }
+        .desc-divider i { color: #6fa7be; margin: 0 15px; font-size: 10px; }
         .desc-ar { font-family: 'Cairo', sans-serif; font-size: 1.35rem; color: #2c2c2c; font-weight: 700; line-height: 1.7; margin-bottom: 0; }
     </style>
 </head>
