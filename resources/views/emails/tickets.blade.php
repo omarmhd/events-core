@@ -10,7 +10,12 @@
         table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
         img { border: 0; display: block; line-height: 100%; outline: none; text-decoration: none; }
         a { text-decoration: none; }
-
+        @font-face {
+            font-family: 'TOX-Geometric';
+            src: url('/alfont_com_TOX-Geometric.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
         /* Typography & Colors - Updated to Brand Identity */
         .text-brand { color: #176B8E; }
         .bg-brand { background-color: #176B8E; }
@@ -151,16 +156,18 @@
         <tr>
             <td align="center" style="padding: 30px 15px 40px 15px; border-top: 1px solid #e2e8f0; margin-top: 20px;">
 
-                <p style="margin: 0 0 5px 0; font-size: 14px; color: #64748b; font-family: 'Segoe UI', sans-serif;">
-                    With regards, <span style="color: #176B8E; font-weight: 700;">Maan Event Management Platform</span>
+                <p style="margin: 0; font-size: 13px; color: #64748b; font-weight: 600;">
+                    This invitation was sent via Maan Event Management Platform
                 </p>
-                <p style="margin: 0 0 20px 0; font-size: 14px; color: #64748b; font-family: Tahoma, sans-serif;" dir="rtl">
-                    مع تحيات <span style="color: #176B8E; font-weight: 700;">منصة معاً لإدارة الفعاليات</span>
+                <p style="margin: 5px 0 0 0; font-size: 13px; color: #64748b; font-weight: 600;" dir="rtl">
+                    تم إرسال هذه الدعوة عبر منصة معاً لإدارة الفعاليات
                 </p>
 
                 <p style="margin: 10px 0 0 0; font-size: 11px; color: #94a3b8; line-height: 1.5;">
                     © {{ date('Y') }} Maan Platform. All rights reserved.<br>
-                    <span dir="rtl">جميع الحقوق محفوظة لدى منصة معاً</span>
+                    <span dir="rtl">جميع الحقوق محفوظة لدى منصة
+                        <span style="font-family:'TOX-Geometric' ">معا</span>
+                        ً</span>
                 </p>
             </td>
         </tr>
