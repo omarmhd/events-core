@@ -172,7 +172,7 @@ class EventInvitationController extends Controller
         $guest = EventInvitation::where('invitation_token', $token)
             ->firstOrFail();
 
-        return view('index', compact('guest',"event"));
+        return view('index', compact('guest',"event","token"));
     }
 
 
@@ -263,6 +263,7 @@ class EventInvitationController extends Controller
 
             return response()->json([
                 'success' => true,
+                "url"=>route('downloadPdf',["token"=>$token]),
                 'message' => 'Response saved successfully'
             ]);
 

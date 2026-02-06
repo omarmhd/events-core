@@ -1,141 +1,236 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Tickets PDF</title>
+    <title>Event Tickets</title>
     <style>
-        /* --- 1. حل مشكلة الخط العربي --- */
-        @font-face {
-            font-family: 'DejaVu Sans';
-            font-style: normal;
-            font-weight: normal;
-        }
-
+        /* --- Fonts & General Reset --- */
         body {
-            font-family: 'DejaVu Sans', sans-serif;
-            background-color: #FDFBF7;
+            /* Using standard clean fonts for English */
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #F8FAFC;
             margin: 0;
             padding: 0;
-            text-align: right;
-            color: #2D3748;
+            color: #1e293b;
+            line-height: 1.5;
         }
 
         @page { margin: 0px; padding: 0px; }
 
-        .container { padding: 40px; max-width: 700px; margin: 0 auto; }
-
-        /* تنسيق الأيقونات البديلة */
-        .icon-img {
-            width: 16px;
-            height: 16px;
-            vertical-align: middle;
-            margin-left: 5px;
+        .container {
+            padding: 40px;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        /* --- باقي التنسيقات --- */
-        .header-banner { width: 100%; height: 200px; background-color: #eee; margin-bottom: 30px; }
-        .header-banner img { width: 100%; height: 100%; object-fit: cover; }
+        /* --- Brand Colors --- */
+        .text-brand { color: #176B8E; }
+        .bg-brand { background-color: #176B8E; color: white; }
+        .bg-gray { background-color: #f1f5f9; color: #64748b; }
 
+        /* --- Banner Image Fix --- */
+        .header-banner {
+            width: 100%;
+            /* Removed fixed height to prevent stretching */
+            background-color: #e2e8f0; /* Placeholder color */
+            margin-bottom: 30px;
+            line-height: 0; /* Removes tiny space below image */
+        }
+        .header-banner img {
+            width: 100%;
+            height: auto; /* Ensures the image scales proportionally */
+            display: block;
+        }
+
+        /* --- Headings --- */
+        .page-heading {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .page-heading h2 { margin: 0; font-size: 26px; color: #176B8E; font-weight: 700; }
+        .page-heading h3 { margin: 8px 0 0; font-size: 16px; color: #64748b; font-weight: normal; }
+
+        /* --- Ticket Card Style --- */
         .ticket-card {
             background-color: #ffffff;
-            border: 1px solid #F0EAE0;
-            border-radius: 15px;
-            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 35px;
             overflow: hidden;
             page-break-inside: avoid;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        .card-top-strip { height: 8px; width: 100%; }
-        .card-body { padding: 30px; text-align: center; }
 
-        .info-table { width: 100%; margin-bottom: 20px; border-collapse: collapse; }
-        .info-box {
-            background-color: #FAFAFA;
-            border: 1px dashed #DCC8A8;
-            border-radius: 8px;
-            padding: 10px;
+        .ticket-header {
+            padding: 15px 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .ticket-body {
+            padding: 30px;
             text-align: center;
         }
 
-        .qr-container {
-            display: inline-block;
+        /* --- Attendee Details --- */
+        .attendee-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0 5px;
+            color: #1e293b;
+        }
+        .attendee-position {
+            font-size: 15px;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        /* --- Info Table --- */
+        .info-table {
+            width: 100%;
+            margin-bottom: 25px;
+            border-collapse: separate;
+            border-spacing: 12px;
+        }
+        .info-cell {
+            background-color: #F8FAFC;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
             padding: 15px;
-            background-color: #FAFAFA;
-            border: 1px dashed #DCC8A8;
+            text-align: center;
+            width: 50%;
+            vertical-align: top;
+        }
+        .info-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+        .info-value { font-size: 13px; font-weight: bold; color: #334155; margin-top: 6px; line-height: 1.4; }
+
+        /* --- Ticket Divider Effect --- */
+        .ticket-divider {
+            border-top: 2px dashed #cbd5e1;
+            margin: 0 20px;
+            position: relative;
+        }
+        .ticket-divider:before, .ticket-divider:after {
+            content: "";
+            position: absolute;
+            top: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: #F8FAFC;
+            border-radius: 50%;
+        }
+        .ticket-divider:before { left: -30px; }
+        .ticket-divider:after { right: -30px; }
+
+        /* --- QR Section --- */
+        .qr-section {
+            padding: 25px;
+            text-align: center;
+            background-color: #fff;
+        }
+        .qr-border {
+            display: inline-block;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
             border-radius: 10px;
-            margin-top: 10px;
+            background: #fff;
         }
-        .qr-img { width: 150px; height: 150px; }
+        .qr-img { width: 150px; height: 150px; display: block; }
+        .scan-text { font-size: 11px; color: #94a3b8; margin-top: 12px; letter-spacing: 1px; font-weight: 600; text-transform: uppercase; }
 
-        h1, h2, h3 { margin: 0; color: #2D3748; }
-        p { margin: 5px 0; color: #718096; font-size: 14px; }
-
-        .badge {
-            background-color: #FEF9EF; color: #C5A065; padding: 5px 15px;
-            border-radius: 20px; border: 1px solid #F0EAE0; font-size: 12px;
-            text-transform: uppercase; display: inline-block; margin-bottom: 10px;
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 25px;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+            font-size: 11px;
         }
-        .footer { text-align: center; font-size: 10px; color: #aaa; margin-top: 50px; border-top: 1px solid #eee; padding-top: 20px; }
+        .footer-brand { color: #176B8E; font-weight: bold; }
+
     </style>
 </head>
 <body>
 
 <div class="header-banner">
-    <img src="{{ public_path('top-banner.png') }}" alt="Banner">
+    <img src="{{ public_path('top-banner.png') }}" alt="Event Banner">
 </div>
 
 <div class="container">
 
-    <div style="text-align: center; margin-bottom: 40px;">
-        <h2>Thank you for accepting.</h2>
-           <h3> Your tickets are below.</h3>
+    <div class="page-heading">
+        <h2>Invitation Confirmed</h2>
+        <h3>Your entry tickets are included below</h3>
     </div>
 
     @foreach ($tickets as $ticket)
         <div class="ticket-card">
-            <div class="card-top-strip" style="background-color: {{ $ticket['label'] === 'Main' ? '#C5A065' : '#E2E8F0' }};"></div>
 
-            <div class="card-body">
-                <span class="badge" style="{{ $ticket['label'] !== 'Main' ? 'color: #718096; background: #F7FAFC;' : '' }}">
-                    {{ $ticket['label'] === 'Main' ? 'Main Ticket' : 'Guest Ticket' }}
-                </span>
+            @if($ticket['label'] === 'Main')
+                <div class="ticket-header bg-brand">
+                    Main Guest Ticket
+                </div>
+            @else
+                <div class="ticket-header bg-gray">
+                    Guest Ticket #{{ $loop->iteration }}
+                </div>
+            @endif
 
+            <div class="ticket-body">
                 @if($ticket['label'] === 'Main')
-                    <h2 style="font-size: 24px; margin: 10px 0;">{{ $invitation->invitee_name }}</h2>
-                    <p>{{ $invitation->invitee_position }}</p>
+                    <div class="attendee-name">{{ $invitation->invitee_name }}</div>
+                    @if(!empty($invitation->invitee_position))
+                        <div class="attendee-position">{{ $invitation->invitee_position }}</div>
+                    @endif
 
-                    <table class="info-table" style="margin-top: 20px;">
+                    <table class="info-table">
                         <tr>
-                            <td width="50%" style="padding: 5px;">
-                                <div class="info-box">
-
-                                    <div style="font-weight: bold; color: #333; margin-top: 5px;">{{ $event->date }}</div>
-                                    <div style="font-size: 12px;">{{ $event->from_time }}</div>
+                            <td class="info-cell">
+                                <div class="info-label">Date & Time</div>
+                                <div class="info-value">
+                                    {{ $event->date }} <br>
+                                    <span style="font-weight: normal; font-size: 12px; color: #64748b;">{{ $event->from_time }}</span>
                                 </div>
                             </td>
-                            <td width="50%" style="padding: 5px;">
-                                <div class="info-box">
-                                    <div style="font-weight: bold; color: #333; margin-top: 5px;">Location</div>
-                                    <div style="font-size: 12px;">{{ Str::limit($event->address, 20) }}</div>
-                                </div>
+                            <td class="info-cell">
+                                <div class="info-label">Location</div>
+                                <div class="info-value">{{ Str::limit($event->address, 30) }}</div>
                             </td>
                         </tr>
                     </table>
                 @else
-                    <h3 style="margin: 15px 0; color: #718096;">Guest Ticket #{{ $loop->iteration }}</h3>
+                    <div style="padding: 25px 0;">
+                        <div style="font-size: 20px; color: #334155; font-weight: 600;">Companion Entry</div>
+                        <div style="font-size: 14px; color: #94a3b8; margin-top: 5px;">Admit One</div>
+                    </div>
                 @endif
+            </div>
 
-                <div class="qr-container" style="{{ $ticket['label'] !== 'Main' ? 'border-color: #E2E8F0;' : '' }}">
+            <div class="ticket-divider"></div>
+
+            <div class="qr-section">
+                <div class="qr-border">
                     <img src="{{ $ticket['qr'] }}" class="qr-img" alt="QR Code">
                 </div>
-
-                <p style="font-size: 10px; margin-top: 10px; letter-spacing: 1px;">PLEASE SCAN AT ENTRANCE</p>
+                <div class="scan-text">Please scan at entrance</div>
             </div>
         </div>
     @endforeach
 
     <div class="footer">
-        &copy; {{ date('Y') }} SAMI-AEC. All rights reserved.
+        <p style="margin-bottom: 10px;">With regards, <span class="footer-brand">Maan Event Management Platform</span></p>
+
+        <p>
+            &copy; {{ date('Y') }} Maan Platform. All rights reserved.
+        </p>
     </div>
+
 </div>
+
 </body>
 </html>

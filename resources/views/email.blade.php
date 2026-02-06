@@ -93,7 +93,7 @@
 
         <p style="font-size: 16px; line-height: 1.5;">
             Thank you for registering for the event: <br>
-            <strong>{{ $event->title ?? 'SAMI-AEC 2026 Picnic' }}</strong>
+            <strong>{{ $event->title ?? 'Maan' }}</strong>
         </p>
 
         <p>Here is your admission ticket. Please present the QR code at the entrance.</p>
