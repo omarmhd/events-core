@@ -160,13 +160,13 @@
                     This invitation was sent via Maan Event Management Platform
                 </p>
                 <p style="margin: 5px 0 0 0; font-size: 13px; color: #64748b; font-weight: 600;" dir="rtl">
-                    تم إرسال هذه الدعوة عبر منصة معاً لإدارة الفعاليات
+                    تم إرسال هذه الدعوة عبر منصة                         <span style="font-family:'TOX-Geometric' ">معا</span>
+                    لإدارة الفعاليات
                 </p>
 
                 <p style="margin: 10px 0 0 0; font-size: 11px; color: #94a3b8; line-height: 1.5;">
                     © {{ date('Y') }} Maan Platform. All rights reserved.<br>
-                    <span dir="rtl">جميع الحقوق محفوظة لدى منصة
-                        <span style="font-family:'TOX-Geometric' ">معا</span>
+                    <span dir="rtl">جميع الحقوق محفوظة لدى منصة معا
                         ً</span>
                 </p>
             </td>

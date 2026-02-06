@@ -9,7 +9,12 @@
         body { margin: 0; padding: 0; background-color: #F8FAFC; font-family: 'Segoe UI', Tahoma, Geneva, sans-serif; -webkit-font-smoothing: antialiased; color: #333333; }
         table { border-collapse: collapse; }
         a { text-decoration: none; }
-
+        @font-face {
+            font-family: 'TOX-Geometric';
+            src: url('/alfont_com_TOX-Geometric.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
         /* Brand Colors */
         .bg-brand { background-color: #176B8E; }
         .text-brand { color: #176B8E; }
@@ -123,7 +128,8 @@
                             This invitation was sent via Maan Event Management Platform
                         </p>
                         <p style="margin: 5px 0 0 0; font-size: 13px; color: #64748b; font-weight: 600;" dir="rtl">
-                            تم إرسال هذه الدعوة عبر منصة معاً لإدارة الفعاليات
+                            تم إرسال هذه الدعوة عبر منصة                         <span style="font-family:'TOX-Geometric' ">معا</span>
+                            لإدارة الفعاليات
                         </p>
                     </div>
 
