@@ -199,7 +199,7 @@
                             </td>
                             <td class="info-cell">
                                 <div class="info-label">Location</div>
-                                <div class="info-value">{{ Str::limit($event->address, 30) }}</div>
+                                <div class="info-value"><a href="{{$invitation->map_link}}">view map</a></div>
                             </td>
                         </tr>
                     </table>
