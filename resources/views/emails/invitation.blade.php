@@ -120,10 +120,10 @@
 
                     <div style="border-top: 1px solid #e2e8f0; padding-top: 25px; margin-top: 20px;">
                         <p style="margin: 0; font-size: 13px; color: #64748b; font-weight: 600;">
-                            With regards, Maan Event Management Platform
+                            This invitation was sent via Maan Event Management Platform
                         </p>
                         <p style="margin: 5px 0 0 0; font-size: 13px; color: #64748b; font-weight: 600;" dir="rtl">
-                            مع تحيات منصة معاً لإدارة الفعاليات
+                            تم إرسال هذه الدعوة عبر منصة معاً لإدارة الفعاليات
                         </p>
                     </div>
 

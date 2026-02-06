@@ -223,7 +223,7 @@
     @endforeach
 
     <div class="footer">
-        <p style="margin-bottom: 10px;">With regards, <span class="footer-brand">Maan Event Management Platform</span></p>
+        <p style="margin-bottom: 10px;">This invitation was sent via Maan Event Management Platform</p>
 
         <p>
             &copy; {{ date('Y') }} Maan Platform. All rights reserved.

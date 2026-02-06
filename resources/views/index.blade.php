@@ -329,8 +329,12 @@
             </div>
 
             <div class="footer-section animate__animated animate__fadeIn">
-                <p class="mb-1">With regards, <span class="footer-brand">Maan Event Management Platform</span></p>
-                <p class="mb-3" dir="rtl">مع تحيات <span class="footer-brand">منصة معاً لإدارة الفعاليات</span></p>
+                <p style="margin: 0; font-size: 13px; color: #64748b; font-weight: 600;">
+                    This invitation was sent via Maan Event Management Platform
+                </p>
+                <p style="margin: 5px 0 0 0; font-size: 13px; color: #64748b; font-weight: 600;" dir="rtl">
+                    تم إرسال هذه الدعوة عبر منصة معاً لإرسال الدعوات
+                </p>
                 <span class="copyright-text">
                     &copy; {{ date('Y') }} Maan Platform. All rights reserved.<br>
                     <span dir="rtl">جميع الحقوق محفوظة لدى منصة معاً</span>
