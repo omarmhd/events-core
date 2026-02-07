@@ -104,7 +104,8 @@ class EventInvitationController extends Controller
             'invitee_email' => 'required|email|unique:event_invitations,invitee_email',            'invitee_position'   => 'nullable|string|max:255',
             'invitee_nationality'=> 'nullable|string|max:255',
             'allowed_guests'     => 'required|integer|min:0|max:10']);
-        $send_email = $request->boolean('send_email');
+        $send_email = $request->boolean('send_email', false);
+
         $invitation = EventInvitation::create([
             'company_id'          => null,
             'event_id'            => null,
