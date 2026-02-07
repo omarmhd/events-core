@@ -22,7 +22,8 @@ class EventInvitation extends Model
         'allowed_guests',
         'selected_guests',
         'responded_at',
-        'invitation_token'
+        'invitation_token',
+        'send_email'
     ];
 
     public function InvitationQrs(){
