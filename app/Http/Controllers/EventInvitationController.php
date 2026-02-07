@@ -146,6 +146,7 @@ class EventInvitationController extends Controller
             'responded_at'     => null,
             'selected_guests'  => 0,
             'invitation_token' => Str::uuid(),
+            'send_email'=>1
         ]);
 
         $invitationLink = route(
