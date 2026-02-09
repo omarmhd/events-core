@@ -329,12 +329,9 @@
             </div>
 
             <div class="footer-section animate__animated animate__fadeIn">
-                <p style="margin: 0; font-size: 13px; color: #64748b; font-weight: 600;">
-                    This invitation was sent via Maan Event Management Platform
-                </p>
-                <p style="margin: 5px 0 0 0; font-size: 13px; color: #64748b; font-weight: 600;" dir="rtl">
-                    تم إرسال هذه الدعوة عبر منصة معاً لإرسال الدعوات
-                </p>
+                <img src="{{ asset('footer-logo.png') }}"
+                     alt="This invitation was sent via Maan invitation platform"
+                     style="max-width: 100%; width: 350px; height: auto; display: inline-block;">
                 <span class="copyright-text">
                     &copy; {{ date('Y') }} Maan Platform. All rights reserved.<br>
                     <span dir="rtl">جميع الحقوق محفوظة لدى منصة معاً</span>

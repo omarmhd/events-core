@@ -155,14 +155,11 @@
 
         <tr>
             <td align="center" style="padding: 30px 15px 40px 15px; border-top: 1px solid #e2e8f0; margin-top: 20px;">
-
-                <p style="margin: 0; font-size: 13px; color: #64748b; font-weight: 600;">
-                    This invitation was sent via Maan Event Management Platform
-                </p>
-                <p style="margin: 5px 0 0 0; font-size: 13px; color: #64748b; font-weight: 600;" dir="rtl">
-                    تم إرسال هذه الدعوة عبر منصة                         <span style="font-family:'TOX-Geometric' ">معا</span>
-                    لإدارة الفعاليات
-                </p>
+                <div style="border-top: 1px solid #e2e8f0; padding-top: 25px; margin-top: 20px;">
+                    <img src="{{ asset('footer-logo.png') }}"
+                         alt="This invitation was sent via Maan invitation platform"
+                         style="max-width: 100%; width: 350px; height: auto; display: inline-block;">
+                </div>
 
                 <p style="margin: 10px 0 0 0; font-size: 11px; color: #94a3b8; line-height: 1.5;">
                     © {{ date('Y') }} Maan Platform. All rights reserved.<br>
